@@ -14,7 +14,7 @@ from src.utils.filing import get_image_paths, get_training_dataset, get_training
 from src import print_debug, Config
 
 
-class RF4EO_classify(object):
+class RF4EO_Classify(object):
 
     def __init__(self):
         self.Config = Config()
@@ -123,5 +123,5 @@ if __name__ == '__main__':
         warnings.simplefilter('ignore')
 
     # make an instance and implement the run function
-    obj = RF4EO_classify()
+    obj = RF4EO_Classify()
     obj.run()
