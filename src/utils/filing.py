@@ -26,6 +26,7 @@ def read_geotiff(image_file_path):
     except:
         raise Exception(f'ERROR: image file could not be read: "{image_file_path}"')
 
+
     image_np = image_dataset.ReadAsArray()
     if len(image_np.shape) == 3:
         image_np = np.moveaxis(image_np, 0, -1)
@@ -44,8 +45,6 @@ def write_geotiff(output_array, output_file_path, geometry):
         output_array = np.expand_dims(output_array, axis=0)
     (geotransform, projection, y_size, x_size) = geometry
     num_bands = output_array.shape[0]
-
-    #print_debug(f'({y_size}, {x_size})', force_exit=True)
 
     driver = gdal.GetDriverByName('GTiff')
     try:

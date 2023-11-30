@@ -5,8 +5,8 @@ from src import print_debug
 
 
 def base_dir_path(configuration):
-    base_dir_path = os.path.join(configuration.PATHS['data partition'], configuration.PATHS['study location'])
-    return base_dir_path
+    base_path = os.path.join(configuration.PATHS['data partition'], configuration.PATHS['study location'])
+    return base_path
 
 
 def results_dir_path(configuration):
@@ -39,13 +39,13 @@ def logging_dir_path(configuration):
 
 
 def classified_file_path(configuration, image_name):
-    classified_name = image_name.replace('5band', f'class_v{configuration.SETTINGS["version"]}')
-    file_path = os.path.join(results_dir_path(configuration), classified_name)
-    return file_path
+    classified_filename = image_name.replace('5band', f'class_v{configuration.SETTINGS["version"]}')
+    classified_filepath = os.path.join(results_dir_path(configuration), classified_filename)
+    return classified_filepath
 
 
 def seagrass_file_path(configuration):
-    seagrass_filepath = f'{configuration.PATHS["study location"]}_' +\
+    seagrass_filename = f'{configuration.PATHS["study location"]}_' +\
                         f'seagrass_v{configuration.SETTINGS["version"]}_MCS{configuration.SETTINGS["MCS"]}.tif'
-    seagrass_filepath = os.path.join(results_dir_path(configuration), seagrass_filepath)
+    seagrass_filepath = os.path.join(results_dir_path(configuration), seagrass_filename)
     return seagrass_filepath

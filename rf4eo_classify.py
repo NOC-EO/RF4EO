@@ -32,7 +32,7 @@ class RF4EO_classify(object):
         number_of_images = len(images_to_classify)
 
         if not number_of_images:
-            print_debug(f'WARNING: no images found here "{images_directory}"', force_exit=True)
+            print_debug(msg=f'ERROR: no images found here "{images_directory}"', force_exit=True)
 
         for image_index, image_path in enumerate(images_to_classify):
             image_name = os.path.split(image_path)[1]
@@ -88,11 +88,9 @@ class RF4EO_classify(object):
             try:
                 classified_image_np = classifier.predict(image_ar)
             except MemoryError:
-                print_debug(msg=f'ERROR: need to slice ...')
+                print_debug(msg=f'MemoryError: need to slice ...')
 
-            classified_image_np = classified_image_np.reshape((y_size, x_size))
-
-            write_geotiff(output_array=classified_image_np,
+            write_geotiff(output_array=classified_image_np.reshape((y_size, x_size)),
                           output_file_path=classified_file_path(self.Config, image_name),
                           geometry=geometry)
 
