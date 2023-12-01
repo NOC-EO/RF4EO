@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score, classification_report, \
     confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
 
-from src.utils.naming import images_dir_path, classified_file_path
+from src.utils.naming import images_dir_path, classified_file_paths
 from src.utils.filing import get_image_paths, get_training_dataset, get_training_array, \
     read_geotiff, write_geotiff, get_logger
 from src import print_debug, Config
@@ -93,7 +93,7 @@ class RF4EO_Classify(object):
                 print_debug(msg=f'MemoryError: need to slice ...')
 
             write_geotiff(output_array=classified_image_np.reshape((y_size, x_size)),
-                          output_file_path=classified_file_path(self.Config, image_name),
+                          output_file_path=classified_file_paths(self.Config, image_name),
                           geometry=geometry)
 
             X_test = np.nan_to_num(X_test)
