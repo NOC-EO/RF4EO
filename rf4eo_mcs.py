@@ -49,16 +49,15 @@ class RF4EO_MCS(object):
 
         # select the two classes of interest to be mapped
         seagrass_exposed_np = np.sum(np.where(images_np == 3, 1, 0), axis=0)
-        seagrass_submerged_np = np.sum(np.where(images_np == 4, 1, 0), axis=0)
+        #seagrass_submerged_np = np.sum(np.where(images_np == 4, 1, 0), axis=0)
 
         # apply the MCS filter
         seagrass_exposed_np[seagrass_exposed_np < MCS] = 0
-        seagrass_submerged_np[seagrass_submerged_np < MCS] = 0
+        #seagrass_submerged_np[seagrass_submerged_np < MCS] = 0
 
         # aggregate the two classes into a single array
-        aggregated_np = np.zeros((y_size, x_size))
-        aggregated_np = np.where(seagrass_exposed_np != 0, 1, aggregated_np)
-        aggregated_np = np.where(seagrass_submerged_np != 0, 2, aggregated_np)
+        aggregated_np = np.where(seagrass_exposed_np != 0, 1, 0)
+        #aggregated_np = np.where(seagrass_submerged_np != 0, 2, aggregated_np)
 
         # filter out small patches
         mask_np = ~aggregated_np.astype(bool)
