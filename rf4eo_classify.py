@@ -24,13 +24,11 @@ class RF4EO_Classify(object):
         CLASSIFICATION_ATTR = self.Config.SETTINGS['attribute']
         NUMBER_OF_TREES = int(self.Config.SETTINGS['number trees'])
         NUMBER_OF_CORES = int(self.Config.SETTINGS['number cores'])
-        IMAGE_IDENTIFIER = self.Config.SETTINGS['image identifier']
         VERBOSE = int(self.Config.SETTINGS['verbose'])
 
         training_dataset = get_training_dataset(configuration=self.Config)
         images_directory = images_dir_path(configuration=self.Config)
-        images_to_classify = get_image_paths(images_directory=images_directory,
-                                             identifier=IMAGE_IDENTIFIER)
+        images_to_classify = get_image_paths(images_directory=images_directory)
         number_of_images = len(images_to_classify)
 
         if not number_of_images:
@@ -51,7 +49,6 @@ class RF4EO_Classify(object):
                                              attribute=CLASSIFICATION_ATTR)
 
             labels = np.unique(training_np[training_np > 0])
-            if VERBOSE: print_debug(msg=f'training dataset has {labels.size} classes: {labels}')
 
             X = image_np[training_np > 0, :]
             y = training_np[training_np > 0]

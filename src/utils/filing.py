@@ -10,12 +10,8 @@ from src import print_debug
 from src.utils.naming import training_file_path, logging_dir_path
 
 
-def get_image_paths(images_directory, identifier: str = None):
-
-    if identifier:
-        image_file_paths = glob.glob(pathname=images_directory + f'\\*{identifier}.tif', recursive=False)
-    else:
-        image_file_paths = glob.glob(pathname=images_directory + '\\*.tif', recursive=False)
+def get_image_paths(images_directory):
+    image_file_paths = glob.glob(pathname=images_directory + '\\*.tif', recursive=False)
     return image_file_paths
 
 
