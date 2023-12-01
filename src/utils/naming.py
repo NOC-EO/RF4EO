@@ -39,7 +39,8 @@ def logging_dir_path(configuration):
 
 
 def classified_file_path(configuration, image_name):
-    classified_filename = image_name.replace('AC', f'class_v{configuration.SETTINGS["version"]}')
+    classified_filename = image_name.replace(configuration.SETTINGS["image identifier"],
+                                             f'class_v{configuration.SETTINGS["version"]}')
     classified_filepath = os.path.join(results_dir_path(configuration), classified_filename)
     return classified_filepath
 
