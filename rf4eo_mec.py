@@ -67,7 +67,7 @@ class RF4EO_MEC(object):
         seagrass_filepath = seagrass_file_paths(self.Config, number_images)
         write_geotiff(aggregated_np, seagrass_filepath, geometry)
         print_debug()
-        print_debug(msg=f'successfully save MCS result: {os.path.split(seagrass_filepath)[1]}')
+        print_debug(msg=f'saved multi-ensemble result: "{os.path.split(seagrass_filepath)[1]}"')
 
 
 if __name__ == '__main__':

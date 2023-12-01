@@ -54,7 +54,8 @@ def classified_file_paths(configuration, image_name):
 
 def seagrass_file_paths(configuration, number_images):
     seagrass_filename = f'{configuration.PATHS["study location"]}_' +\
-                        f'seagrass_v{configuration.SETTINGS["version"]}_' + \
+                        f'seagrass_{configuration.SETTINGS["image identifier"]}_' +\
+                        f'v{configuration.SETTINGS["version"]}_' +\
                         f'MEC{configuration.SETTINGS["MEC"]}-{number_images}.tif'
     seagrass_filepath = os.path.join(results_dir_path(configuration), seagrass_filename)
     return seagrass_filepath
