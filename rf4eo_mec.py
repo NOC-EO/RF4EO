@@ -4,7 +4,7 @@ import sys
 import numpy as np
 from skimage.morphology import remove_small_holes
 
-from src.utils.naming import classified_dir_path, seagrass_file_paths
+from src.utils.naming import classified_dir_path, seagrass_file_path
 from src.utils.filing import get_image_paths, read_geotiff, write_geotiff
 from src import print_debug, Config
 
@@ -65,7 +65,7 @@ class RF4EO_MEC(object):
         mask_np = remove_small_holes(ar=mask_np, area_threshold=PATCH_THRESHOLD, connectivity=1)
         aggregated_np[mask_np] = 0
 
-        seagrass_filepath = seagrass_file_paths(self.Config, number_images)
+        seagrass_filepath = seagrass_file_path(self.Config, number_images)
         write_geotiff(aggregated_np, seagrass_filepath, geometry)
         print_debug()
         print_debug(msg=f'saved multi-ensemble result: "{os.path.split(seagrass_filepath)[1]}"')

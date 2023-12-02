@@ -48,13 +48,13 @@ def logging_dir_path(configuration):
     return logging_path
 
 
-def classified_file_paths(configuration, image_name):
+def classified_file_path(configuration, image_name):
     classified_filename = image_name.replace(".tif", f'_class_v{configuration.SETTINGS["version"]}.tif')
     classified_filepath = os.path.join(classified_dir_path(configuration), classified_filename)
     return classified_filepath
 
 
-def seagrass_file_paths(configuration, number_images):
+def seagrass_file_path(configuration, number_images):
     seagrass_filename = f'{configuration.PATHS["study location"]}_' +\
                         f'seagrass_{configuration.SETTINGS["image identifier"]}_' +\
                         f'v{configuration.SETTINGS["version"]}_' +\
