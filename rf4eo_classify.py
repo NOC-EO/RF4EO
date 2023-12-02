@@ -100,8 +100,10 @@ class RF4EO_Classify(object):
             # perform four part accuracy assessment and log the metrics
             assessment_logger = get_logger(self.Config, f'logger_{image_index}', image_name)
             assessment_logger.info(msg='Random Forest Classifier')
+            assessment_logger.info(msg='')
             assessment_logger.info(msg=f'number of trees: {NUMBER_OF_TREES}')
             assessment_logger.info(msg=f'fitting criterion:  {ALGORITHM}')
+            assessment_logger.info(msg=f'random seed:  {seed}')
             assessment_logger.info(msg='')
 
             # first log the relative importance of each band
