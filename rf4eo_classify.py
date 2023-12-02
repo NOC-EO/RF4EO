@@ -32,18 +32,19 @@ class RF4EO_Classify(object):
         number_of_images = len(images_to_classify)
         if not number_of_images:
             print_debug(msg=f'ERROR: no images found here "{images_directory}"', force_exit=True)
+        print_debug()
 
         for image_index, image_path in enumerate(images_to_classify):
-            print_debug()
 
             image_name = os.path.split(image_path)[1]
             classified_filepath = classified_file_path(self.Config, image_name)
             if os.path.exists(classified_filepath):
                 print_debug(msg=f'WARNING: already classified "{classified_filepath}" skipping')
                 continue
+                
+            print_debug()
             print_debug(msg=f'classifying: "{image_name}"')
             processing_logger = get_logger(self.Config, f'processing_logger_{image_index}', image_name)
-
             image_np, geometry = read_geotiff(image_file_path=image_path)
 
             # select bands from image to classify
