@@ -75,7 +75,7 @@ class RF4EO_Classify(object):
                                                 verbose=VERBOSE,
                                                 n_jobs=NUMBER_OF_CORES)
 
-            # train the classifier
+            # train the classifier (with correctly prepared data)
             X_train = np.nan_to_num(X_train)
             fit_estimator = classifier.fit(X_train, y_train)
             if VERBOSE:
@@ -84,9 +84,8 @@ class RF4EO_Classify(object):
 
             # classify the image
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
-            image_np = np.nan_to_num(image_np)
             try:
-                classified_image_np = classifier.predict(image_np)
+                classified_image_np = classifier.predict(np.nan_to_num(image_np))
             except MemoryError:
                 print_debug(msg=f'MemoryError: acquire a bigger machine...')
                 continue
@@ -107,8 +106,7 @@ class RF4EO_Classify(object):
             aa_logger.info(msg='')
 
             # then classify the validation data and produce the confusion matrix
-            X_validation = np.nan_to_num(X_validation)
-            y_predict = classifier.predict(X_validation)
+            y_predict = classifier.predict(np.nan_to_num(X_validation))
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
                                            columns=df['y_predicted'],
