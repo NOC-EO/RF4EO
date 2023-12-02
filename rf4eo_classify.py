@@ -42,6 +42,7 @@ class RF4EO_Classify(object):
                 print_debug(msg=f'WARNING: already classified "{image_name}" skipping')
                 continue
 
+            print_debug()
             print_debug(msg=f'classifying: "{image_name}"')
             processing_logger = get_logger(self.Config, f'processing_logger_{image_index}', image_name)
             image_np, geometry = read_geotiff(image_file_path=image_path)
@@ -123,7 +124,6 @@ class RF4EO_Classify(object):
             # lastly log the overall accuracy and send to console
             accuracy_message = f'Kappa = {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
             print_debug(msg=accuracy_message)
-            print_debug()
             processing_logger.info(msg=accuracy_message)
 
 
