@@ -106,7 +106,7 @@ class RF4EO_Classify(object):
                           output_file_path=classified_filepath,
                           geometry=geometry)
 
-            # perform an accuracy analysis
+            # accuracy assessment
 
             # classify the validation data
             X_validation = np.nan_to_num(X_validation)
