@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 
 from src.utils.naming import images_dir_path, classified_file_path
-from src.utils.filing import get_image_paths, get_training_dataset, get_training_array, \
+from src.utils.filing import get_image_paths, get_training_shapefile, get_training_array, \
     read_geotiff, write_geotiff, get_logger
 from src import print_debug, Config
 
@@ -28,7 +28,10 @@ class RF4EO_Classify(object):
         VERBOSE = int(self.Config.SETTINGS['verbose'])
         CLASSIFICATION_ATTR = self.Config.SETTINGS['training attribute']
 
-        training_dataset = get_training_dataset(configuration=self.Config)
+        # open the training shapefile using OGR
+        training_shapefile = get_training_shapefile(configuration=self.Config)
+
+        # find the images to be classsified
         images_directory = images_dir_path(configuration=self.Config)
         images_to_classify = get_image_paths(images_directory=images_directory)
         number_of_images = len(images_to_classify)
@@ -61,15 +64,21 @@ class RF4EO_Classify(object):
             image_np = image_np[:, :, :4]
             (y_size, x_size, number_bands) = image_np.shape
 
-            # import the ground truth data from the training shapefile as a numpy array
-            ground_truth_np = get_training_array(training_dataset=training_dataset,
+            # open the training shapefile as a numpy array using GDAL
+            # with the geometry from the image being classified
+            # and using the correct shapefile attribute
+            ground_truth_np = get_training_array(training_dataset=training_shapefile,
                                                  geometry=geometry,
                                                  attribute=CLASSIFICATION_ATTR)
             class_labels = np.unique(ground_truth_np[ground_truth_np > 0])
 
-            # split the ground truth data 80:20 into training and validation data
+            # transform the image and ground truth data numpy arrays into 1D arrays
+            # masked to values where the ground truth data is not zero
             X = image_np[ground_truth_np > 0, :]
             y = ground_truth_np[ground_truth_np > 0]
+
+            # split the image and ground truth data arrays 80:20 into training and validation data
+            # using a random seed - that if used again produces the same split
             seed = randint(0, 2**32 - 1)
             X_train, X_validation, y_train, y_validation = train_test_split(X, y,
                                                                             train_size=0.8,
@@ -82,7 +91,7 @@ class RF4EO_Classify(object):
                                                 verbose=VERBOSE,
                                                 n_jobs=NUMBER_OF_CORES)
 
-            # train the classifier (with correctly prepared data i.e. no nan or inf values)
+            # train the classifier - with correctly prepared data i.e. no nan or inf values
             X_train = np.nan_to_num(X_train)
             fit_estimator = classifier.fit(X=X_train, y=y_train)
             if VERBOSE:

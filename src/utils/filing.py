@@ -56,7 +56,7 @@ def write_geotiff(output_array, output_file_path, geometry):
     output_ds.FlushCache()
 
 
-def get_training_dataset(configuration):
+def get_training_shapefile(configuration):
 
     try:
         training_dataset = ogr.Open(training_file_path(configuration))
@@ -64,10 +64,10 @@ def get_training_dataset(configuration):
         print_debug(f'ERROR: could not open training shapefile {ex}', force_exit=True)
 
     attributes = []
-    ldefn = training_dataset.GetLayer().GetLayerDefn()
-    for field_index in range(ldefn.GetFieldCount()):
-        fdefn = ldefn.GetFieldDefn(field_index)
-        attributes.append(fdefn.name)
+    layer_definition = training_dataset.GetLayer().GetLayerDefn()
+    for field_index in range(layer_definition.GetFieldCount()):
+        field_definition = layer_definition.GetFieldDefn(field_index)
+        attributes.append(field_definition.name)
 
     attribute = configuration.SETTINGS['training attribute']
     if attribute not in attributes:
