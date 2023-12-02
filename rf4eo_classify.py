@@ -46,8 +46,8 @@ class RF4EO_Classify(object):
                 continue
 
             # start by importing the image geotiff to a numpy array using GDAL
-            # since a numpy array does not know where it is located also
-            # keep the relevant geometrical information
+            # since a numpy array does not know where it is located
+            # also need to keep the geometrical information
             print_debug(msg=f'classifying: "{image_name}"')
             try:
                 image_np, geometry = read_geotiff(image_file_path=image_path)
@@ -55,7 +55,7 @@ class RF4EO_Classify(object):
                 print_debug(f'AttributeError: image file could not be read: "{image_path}"')
                 continue
 
-            # select bands from image to classify
+            # select the required bands from image to be classified
             # e.g. to classify Sentinel-2 B2, B3, B4, B8 (red, green, blue and NIR) bands
             # but this will depend on the satellite bands in the images being used
             image_np = image_np[:, :, :4]
@@ -82,14 +82,14 @@ class RF4EO_Classify(object):
                                                 verbose=VERBOSE,
                                                 n_jobs=NUMBER_OF_CORES)
 
-            # train the classifier (with correctly prepared data)
+            # train the classifier (with correctly prepared data i.e. no nan or inf values)
             X_train = np.nan_to_num(X_train)
             fit_estimator = classifier.fit(X=X_train, y=y_train)
             if VERBOSE:
                 print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
 
-            # classify the full image
+            # then classify the full image using the trained RF classifier
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
             try:
                 classified_image_np = classifier.predict(X=np.nan_to_num(image_np))
@@ -97,13 +97,14 @@ class RF4EO_Classify(object):
                 print_debug(msg=f'MemoryError: acquire a bigger machine...')
                 continue
 
-            # save classified image to file
-            # using the same geometry that came from the source image
+            # save classified image to disc as a geotiff again using GDAL
+            # using the same geometrical information that came from the source image
             write_geotiff(output_array=classified_image_np.reshape((y_size, x_size)),
                           output_file_path=classified_filepath,
                           geometry=geometry)
 
-            # perform four part accuracy assessment and log the metrics
+            # a vital step in any supervised classification is an accuracy assessment
+            # performed here in four parts that log the metrics to a file on disc
 
             # open a logger and write a header
             assessment_logger = get_logger(self.Config, f'logger_{image_index}', image_name)
