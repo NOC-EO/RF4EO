@@ -85,14 +85,6 @@ class RF4EO_Classify(object):
                 print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
 
-            # log the relative importance of each band
-            processing_logger.info(msg='')
-            processing_logger.info(msg='importance of each band')
-            bands = range(1, number_bands + 1)
-            for band, importance in zip(bands, fit_estimator.feature_importances_):
-                processing_logger.info(msg=f'band {band} importance: {importance:.2f}')
-            processing_logger.info(msg='')
-
             # classify the image
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
             image_np = np.nan_to_num(image_np)
@@ -106,13 +98,21 @@ class RF4EO_Classify(object):
                           output_file_path=classified_filepath,
                           geometry=geometry)
 
-            # accuracy assessment
+            # perform four part accuracy assessment
 
-            # classify the validation data
+            # first log the relative importance of each band
+            processing_logger.info(msg='')
+            processing_logger.info(msg='importance of each band')
+            bands = range(1, number_bands + 1)
+            for band, importance in zip(bands, fit_estimator.feature_importances_):
+                processing_logger.info(msg=f'band {band} importance: {importance:.2f}')
+            processing_logger.info(msg='')
+
+            # then classify the validation data
             X_validation = np.nan_to_num(X_validation)
             y_predict = classifier.predict(X_validation)
 
-            # produce the confusion matrix
+            # and log the confusion matrix
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
                                            columns=df['y_predicted'],
@@ -121,13 +121,13 @@ class RF4EO_Classify(object):
             processing_logger.info(msg=confusion_matrix)
             processing_logger.info(msg='')
 
-            # then the classification report
+            # next log the classification report
             target_names = [str(name) for name in range(1, len(class_labels) + 1)]
             class_report = classification_report(y_validation, y_predict, target_names=target_names)
             processing_logger.info(msg=class_report)
             processing_logger.info(msg='')
 
-            # lastly log the overall accuracy and send to console
+            # lastly log the overall accuracy
             accuracy_message = f'Kappa: {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
             print_debug(msg=accuracy_message)
             processing_logger.info(msg=accuracy_message)
