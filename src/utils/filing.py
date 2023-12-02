@@ -73,7 +73,7 @@ def get_training_dataset(configuration):
         fdefn = ldefn.GetFieldDefn(field_index)
         attributes.append(fdefn.name)
 
-    attribute = configuration.SETTINGS['attribute']
+    attribute = configuration.SETTINGS['training attribute']
     if attribute not in attributes:
         print_debug(f'ERROR: "{attribute}" not in the training shapefile')
         print_debug(f'       available attributes are: {attributes}', force_exit=True)

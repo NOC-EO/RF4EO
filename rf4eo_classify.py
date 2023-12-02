@@ -59,7 +59,7 @@ class RF4EO_Classify(object):
 
             # create a Random Forest classifier
             classifier = RandomForestClassifier(n_estimators=NUMBER_OF_TREES,
-                                                criterion='entropy',
+                                                criterion='gini',
                                                 bootstrap=True,
                                                 verbose=VERBOSE,
                                                 n_jobs=NUMBER_OF_CORES)
