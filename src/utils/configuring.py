@@ -28,7 +28,7 @@ class Config(object):
             if not configuration.has_option('SETTINGS', 'number cores'):
                 self.SETTINGS['number cores'] = "-1"
             if not configuration.has_option('SETTINGS', 'attribute'):
-                self.SETTINGS['attribute'] = "id"
+                self.SETTINGS['training attribute'] = "id"
 
         except KeyError as key_ex:
 
@@ -36,3 +36,4 @@ class Config(object):
             print_debug(f'missing "{key_ex}" section', force_exit=True)
 
         print_debug('configuration loaded')
+        print_debug(msg=f'region being processed: "{self.PATHS["study location"]}"')

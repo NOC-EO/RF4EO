@@ -18,11 +18,10 @@ class RF4EO_Classify(object):
 
     def __init__(self):
         self.Config = Config()
-        print_debug()
 
     def run(self):
 
-        CLASSIFICATION_ATTR = self.Config.SETTINGS['attribute']
+        CLASSIFICATION_ATTR = self.Config.SETTINGS['training attribute']
         NUMBER_OF_TREES = int(self.Config.SETTINGS['number trees'])
         NUMBER_OF_CORES = int(self.Config.SETTINGS['number cores'])
         VERBOSE = int(self.Config.SETTINGS['verbose'])
