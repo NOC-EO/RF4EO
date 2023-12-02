@@ -14,7 +14,7 @@ def get_image_paths(images_directory, identifier: str = None):
         image_file_paths = glob.glob(pathname=images_directory + f'\\*{identifier}.tif', recursive=False)
     else:
         image_file_paths = glob.glob(pathname=images_directory + '\\*.tif', recursive=False)
-    return image_file_paths
+    return sorted(image_file_paths)
 
 
 def read_geotiff(image_file_path):
