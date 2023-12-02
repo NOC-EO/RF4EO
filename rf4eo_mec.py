@@ -44,14 +44,16 @@ class RF4EO_MEC(object):
 
         # import the classified images
         images_np = np.zeros((number_images, y_size, x_size))
+        good_images = 0
         for image_index, image_path in enumerate(MEC_image_paths):
             image_name = os.path.split(image_path)[1]
             try:
                 image_np = read_geotiff(image_path)[0].squeeze()
                 images_np[image_index] = image_np
                 print_debug(msg=f'good: {image_name}')
+                good_images += 1
             except AttributeError:
-                print_debug(msg=f'bad: {image_name} {image_np.shape}')
+                print_debug(msg=f'bad: "{image_name}" either wrong type or wrong shape {image_np.shape}')
                 continue
 
         # aggregate the classes of interest
@@ -69,7 +71,7 @@ class RF4EO_MEC(object):
             mask_np = remove_small_holes(ar=mask_np, area_threshold=PATCH_THRESHOLD, connectivity=1)
             aggregated_np[mask_np] = 0
 
-        seagrass_filepath = seagrass_file_path(self.Config, number_images)
+        seagrass_filepath = seagrass_file_path(self.Config, good_images)
         write_geotiff(output_array=aggregated_np,
                       output_file_path=seagrass_filepath,
                       geometry=geometry)
