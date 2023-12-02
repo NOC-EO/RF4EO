@@ -96,14 +96,14 @@ class RF4EO_Classify(object):
                           geometry=geometry)
 
             # perform four part accuracy assessment and log the metrics
-            aa_logger = get_logger(self.Config, f'logger_{image_index}', image_name)
+            assessment_logger = get_logger(self.Config, f'logger_{image_index}', image_name)
 
             # first log the relative importance of each band
-            aa_logger.info(msg='')
-            aa_logger.info(msg='relative importance of bands')
+            assessment_logger.info(msg='')
+            assessment_logger.info(msg='relative importance of bands')
             for band_index, importance in enumerate(fit_estimator.feature_importances_):
-                aa_logger.info(msg=f'band {band_index+1} importance: {importance:.2f}')
-            aa_logger.info(msg='')
+                assessment_logger.info(msg=f'band {band_index+1} importance: {importance:.2f}')
+            assessment_logger.info(msg='')
 
             # then classify the validation data and produce the confusion matrix
             y_predict = classifier.predict(np.nan_to_num(X_validation))
@@ -112,20 +112,20 @@ class RF4EO_Classify(object):
                                            columns=df['y_predicted'],
                                            rownames=['Ground Truth'],
                                            colnames=['Predicted'])
-            aa_logger.info(msg=confusion_matrix)
-            aa_logger.info(msg='')
+            assessment_logger.info(msg=confusion_matrix)
+            assessment_logger.info(msg='')
 
             # next log the classification report
             target_names = [str(name) for name in range(1, len(class_labels) + 1)]
             class_report = classification_report(y_validation, y_predict, target_names=target_names)
-            aa_logger.info(msg=class_report)
-            aa_logger.info(msg='')
+            assessment_logger.info(msg=class_report)
+            assessment_logger.info(msg='')
 
             # lastly log the overall accuracy
             accuracy_message = f'Kappa: {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
             print_debug(msg=accuracy_message)
             print_debug()
-            aa_logger.info(msg=accuracy_message)
+            assessment_logger.info(msg=accuracy_message)
 
 
 if __name__ == '__main__':
