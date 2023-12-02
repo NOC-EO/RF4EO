@@ -42,15 +42,14 @@ def training_file_path(configuration):
 
 
 def logging_dir_path(configuration):
-    logging_path = os.path.join(base_dir_path(configuration), 'logs')
+    logging_path = os.path.join(base_dir_path(configuration), f'logs_{configuration.SETTINGS["image identifier"]}')
     if not os.path.isdir(logging_path):
         os.makedirs(logging_path)
     return logging_path
 
 
 def classified_file_paths(configuration, image_name):
-    classified_filename = image_name.replace(configuration.SETTINGS["image identifier"],
-                                             f'class_v{configuration.SETTINGS["version"]}')
+    classified_filename = image_name.replace(".tif", f'_class_v{configuration.SETTINGS["version"]}.tif')
     classified_filepath = os.path.join(classified_dir_path(configuration), classified_filename)
     return classified_filepath
 

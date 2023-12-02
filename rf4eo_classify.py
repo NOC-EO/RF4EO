@@ -47,7 +47,6 @@ class RF4EO_Classify(object):
             training_np = get_training_array(training_dataset=training_dataset,
                                              geometry=geometry,
                                              attribute=CLASSIFICATION_ATTR)
-
             labels = np.unique(training_np[training_np > 0])
 
             X = image_np[training_np > 0, :]
@@ -101,11 +100,9 @@ class RF4EO_Classify(object):
             processing_logger.info(msg=convolution_mat)
             processing_logger.info(msg='')
 
-            target_names = []
-            for name in range(1, labels.size + 1):
-                target_names.append(str(name))
-            sum_mat = classification_report(y_test, y_predict, target_names=target_names)
-            processing_logger.info(msg=sum_mat)
+            target_names = [str(name) for name in range(1, len(labels) + 1)]
+            class_report = classification_report(y_test, y_predict, target_names=target_names)
+            processing_logger.info(msg=class_report)
             processing_logger.info(msg='')
 
             # Overall Accuracy (OAA)
