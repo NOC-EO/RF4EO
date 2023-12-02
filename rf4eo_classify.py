@@ -3,6 +3,7 @@ import os
 import sys
 import numpy as np
 import pandas as pd
+from random import randint
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
@@ -34,11 +35,11 @@ class RF4EO_Classify(object):
             print_debug(msg=f'ERROR: no images found here "{images_directory}"', force_exit=True)
 
         for image_index, image_path in enumerate(images_to_classify):
-            image_name = os.path.split(image_path)[1]
-            processing_logger = get_logger(self.Config, f'processing_logger_{image_index}', image_name)
 
+            image_name = os.path.split(image_path)[1]
             print_debug()
             print_debug(msg=f'classifying: "{image_name}"')
+            processing_logger = get_logger(self.Config, f'processing_logger_{image_index}', image_name)
 
             image_np, geometry = read_geotiff(image_file_path=image_path)
             (y_size, x_size, number_bands) = image_np.shape
@@ -51,10 +52,11 @@ class RF4EO_Classify(object):
             # split the ground truth data 80:20 into training and validation data
             X = image_np[ground_truth_np > 0, :]
             y = ground_truth_np[ground_truth_np > 0]
+            seed = randint(0, 2**32 - 1)
             X_train, X_validation, y_train, y_validation = train_test_split(X, y,
                                                                             train_size=0.8,
                                                                             test_size=0.2,
-                                                                            random_state=42)
+                                                                            random_state=seed)
 
             # create a Random Forest classifier
             classifier = RandomForestClassifier(n_estimators=NUMBER_OF_TREES,
