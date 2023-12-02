@@ -77,7 +77,7 @@ class RF4EO_Classify(object):
 
             # train the classifier (with correctly prepared data)
             X_train = np.nan_to_num(X_train)
-            fit_estimator = classifier.fit(X_train, y_train)
+            fit_estimator = classifier.fit(X=X_train, y=y_train)
             if VERBOSE:
                 print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
@@ -85,7 +85,7 @@ class RF4EO_Classify(object):
             # classify the image
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
             try:
-                classified_image_np = classifier.predict(np.nan_to_num(image_np))
+                classified_image_np = classifier.predict(X=np.nan_to_num(image_np))
             except MemoryError:
                 print_debug(msg=f'MemoryError: acquire a bigger machine...')
                 continue
@@ -106,7 +106,7 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg='')
 
             # then classify the validation data and log the confusion matrix
-            y_predict = classifier.predict(np.nan_to_num(X_validation))
+            y_predict = classifier.predict(X=np.nan_to_num(X_validation))
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
                                            columns=df['y_predicted'],
@@ -124,7 +124,8 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg='')
 
             # lastly log the overall accuracy
-            accuracy_message = f'Kappa: {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
+            kappa = accuracy_score(y_true=y_validation, y_pred=y_predict) * 100
+            accuracy_message = f'Kappa: {kappa:.1f}%'
             print_debug(msg=accuracy_message)
             print_debug()
             assessment_logger.info(msg=accuracy_message)
