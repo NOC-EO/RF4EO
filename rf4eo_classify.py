@@ -60,14 +60,17 @@ class RF4EO_Classify(object):
 
             # create a Random Forest classifier
             classifier = RandomForestClassifier(n_estimators=NUMBER_OF_TREES,
+                                                criterion='entropy',
                                                 bootstrap=True,
-                                                oob_score=True,
                                                 verbose=VERBOSE,
                                                 n_jobs=NUMBER_OF_CORES)
 
             # train the classifier
             X_train = np.nan_to_num(X_train)
             fit_estimator = classifier.fit(X_train, y_train)
+            if VERBOSE:
+                print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
+                print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
 
             # log the relative importance of each band
             processing_logger.info(msg='')
