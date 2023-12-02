@@ -25,6 +25,7 @@ class RF4EO_Classify(object):
         NUMBER_OF_TREES = int(self.Config.SETTINGS['number trees'])
         NUMBER_OF_CORES = int(self.Config.SETTINGS['number cores'])
         VERBOSE = int(self.Config.SETTINGS['verbose'])
+        ALGORITHM = self.Config.SETTINGS['algorithm']
 
         training_dataset = get_training_dataset(configuration=self.Config)
         images_directory = images_dir_path(configuration=self.Config)
@@ -70,7 +71,7 @@ class RF4EO_Classify(object):
 
             # create a Random Forest classifier
             classifier = RandomForestClassifier(n_estimators=NUMBER_OF_TREES,
-                                                criterion='gini',
+                                                criterion=ALGORITHM,
                                                 bootstrap=True,
                                                 verbose=VERBOSE,
                                                 n_jobs=NUMBER_OF_CORES)
@@ -97,9 +98,12 @@ class RF4EO_Classify(object):
 
             # perform four part accuracy assessment and log the metrics
             assessment_logger = get_logger(self.Config, f'logger_{image_index}', image_name)
+            assessment_logger.info(msg='Random Forest Classifier')
+            assessment_logger.info(msg=f'number of trees: {NUMBER_OF_TREES}')
+            assessment_logger.info(msg=f'fitting criterion:  {ALGORITHM}')
+            assessment_logger.info(msg='')
 
             # first log the relative importance of each band
-            assessment_logger.info(msg='')
             assessment_logger.info(msg='relative importance of bands')
             for band_index, importance in enumerate(fit_estimator.feature_importances_):
                 assessment_logger.info(msg=f'band {band_index+1} importance: {importance:.2f}')

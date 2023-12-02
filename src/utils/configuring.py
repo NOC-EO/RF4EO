@@ -21,6 +21,8 @@ class Config(object):
             self.SETTINGS = configuration['SETTINGS']
 
             # add defaults if these have not been set
+            if not configuration.has_option('SETTINGS', 'algorithm'):
+                self.SETTINGS['algorithm'] = "gini"
             if not configuration.has_option('SETTINGS', 'version'):
                 self.SETTINGS['version'] = "1"
             if not configuration.has_option('SETTINGS', 'number trees'):
