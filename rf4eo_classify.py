@@ -83,7 +83,7 @@ class RF4EO_Classify(object):
                 print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
 
-            # classify the image
+            # classify the full image
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
             try:
                 classified_image_np = classifier.predict(X=np.nan_to_num(image_np))
