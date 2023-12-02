@@ -29,7 +29,10 @@ class Config(object):
                 self.SETTINGS['number cores'] = "-1"
             if not configuration.has_option('SETTINGS', 'attribute'):
                 self.SETTINGS['training attribute'] = "id"
-
+            if not configuration.has_option('SETTINGS', 'patch threshold'):
+                self.SETTINGS['patch threshold'] = "0"
+            if not configuration.has_option('SETTINGS', 'classes to map'):
+                self.SETTINGS['classes to map'] = "0"
         except KeyError as key_ex:
 
             print_debug(f'badly formatted: "{os.path.abspath(CONFIG_FILE)}"')
