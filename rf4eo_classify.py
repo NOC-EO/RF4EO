@@ -31,7 +31,7 @@ class RF4EO_Classify(object):
         # open the training shapefile using OGR
         training_shapefile = get_training_shapefile(configuration=self.Config)
 
-        # find the images to be classsified
+        # find the images to be classified
         images_directory = images_dir_path(configuration=self.Config)
         images_to_classify = get_image_paths(images_directory=images_directory)
         number_of_images = len(images_to_classify)
