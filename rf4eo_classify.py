@@ -30,7 +30,6 @@ class RF4EO_Classify(object):
         images_directory = images_dir_path(configuration=self.Config)
         images_to_classify = get_image_paths(images_directory=images_directory)
         number_of_images = len(images_to_classify)
-
         if not number_of_images:
             print_debug(msg=f'ERROR: no images found here "{images_directory}"', force_exit=True)
 
