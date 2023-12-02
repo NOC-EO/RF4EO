@@ -37,6 +37,9 @@ class Config(object):
                 self.SETTINGS['patch threshold'] = "0"
             if not configuration.has_option('SETTINGS', 'classes to map'):
                 self.SETTINGS['classes to map'] = "0"
+            if not configuration.has_option('SETTINGS', 'image identifier'):
+                self.SETTINGS['image identifier'] = ""
+
         except KeyError as key_ex:
 
             print_debug(f'badly formatted: "{os.path.abspath(CONFIG_FILE)}"')
