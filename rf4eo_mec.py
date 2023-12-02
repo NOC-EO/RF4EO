@@ -51,7 +51,7 @@ class RF4EO_MEC(object):
                 images_np[image_index] = image_np
                 print_debug(msg=f'good: {image_name}')
             except ValueError:
-                print_debug(msg=f'bad: {image_name} {np.unique(image_np)} {image_np.shape}')
+                print_debug(msg=f'bad: {image_name} {image_np.shape}')
                 continue
 
         # aggregate the classes of interest
