@@ -41,10 +41,7 @@ class RF4EO_Classify(object):
             if os.path.exists(classified_filepath):
                 print_debug(msg=f'WARNING: already classified "{image_name}" skipping')
                 continue
-
-            print_debug()
             print_debug(msg=f'classifying: "{image_name}"')
-            processing_logger = get_logger(self.Config, f'processing_logger_{image_index}', image_name)
 
             try:
                 image_np, geometry = read_geotiff(image_file_path=image_path)
@@ -92,45 +89,45 @@ class RF4EO_Classify(object):
                 classified_image_np = classifier.predict(image_np)
             except MemoryError:
                 print_debug(msg=f'MemoryError: acquire a bigger machine...')
+                continue
 
             # save classified image to file
             write_geotiff(output_array=classified_image_np.reshape((y_size, x_size)),
                           output_file_path=classified_filepath,
                           geometry=geometry)
 
-            # perform four part accuracy assessment
+            # perform four part accuracy assessment and log the metrics
+            aa_logger = get_logger(self.Config, f'logger_{image_index}', image_name)
 
             # first log the relative importance of each band
-            processing_logger.info(msg='')
-            processing_logger.info(msg='importance of each band')
-            bands = range(1, number_bands + 1)
-            for band, importance in zip(bands, fit_estimator.feature_importances_):
-                processing_logger.info(msg=f'band {band} importance: {importance:.2f}')
-            processing_logger.info(msg='')
+            aa_logger.info(msg='')
+            aa_logger.info(msg='relative importance of bands')
+            for band_index, importance in enumerate(fit_estimator.feature_importances_):
+                aa_logger.info(msg=f'band {band_index+1} importance: {importance:.2f}')
+            aa_logger.info(msg='')
 
-            # then classify the validation data
+            # then classify the validation data and produce the confusion matrix
             X_validation = np.nan_to_num(X_validation)
             y_predict = classifier.predict(X_validation)
-
-            # and log the confusion matrix
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
                                            columns=df['y_predicted'],
                                            rownames=['Ground Truth'],
                                            colnames=['Predicted'])
-            processing_logger.info(msg=confusion_matrix)
-            processing_logger.info(msg='')
+            aa_logger.info(msg=confusion_matrix)
+            aa_logger.info(msg='')
 
             # next log the classification report
             target_names = [str(name) for name in range(1, len(class_labels) + 1)]
             class_report = classification_report(y_validation, y_predict, target_names=target_names)
-            processing_logger.info(msg=class_report)
-            processing_logger.info(msg='')
+            aa_logger.info(msg=class_report)
+            aa_logger.info(msg='')
 
             # lastly log the overall accuracy
             accuracy_message = f'Kappa: {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
             print_debug(msg=accuracy_message)
-            processing_logger.info(msg=accuracy_message)
+            print_debug()
+            aa_logger.info(msg=accuracy_message)
 
 
 if __name__ == '__main__':
