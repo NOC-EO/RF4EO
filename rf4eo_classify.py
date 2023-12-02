@@ -21,6 +21,9 @@ class RF4EO_Classify(object):
 
     def run(self):
 
+        # import the configuration constants required that came from
+        # the ini file which was parsed by the configuring.py script
+        # and stored in the Config class attribute
         NUMBER_OF_TREES = int(self.Config.CLASSIFIER['number trees'])
         NUMBER_OF_CORES = int(self.Config.CLASSIFIER['number cores'])
         ALGORITHM = self.Config.CLASSIFIER['algorithm']

@@ -49,7 +49,6 @@ def write_geotiff(output_array, output_file_path, geometry):
         output_ds.SetGeoTransform(geotransform)
         for band in range(num_bands):
             output_ds.GetRasterBand(band + 1).WriteArray(output_array[band])
-
     except IOError:
         print_debug(f'IOError: gdal dataset for: {output_file_path} cannot be created', force_exit=True)
 
