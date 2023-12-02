@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
-#    , precision_score, recall_score,
 from sklearn.model_selection import train_test_split
 
 from src.utils.naming import images_dir_path, classified_file_paths
@@ -44,14 +43,14 @@ class RF4EO_Classify(object):
             image_np, geometry = read_geotiff(image_file_path=image_path)
             (y_size, x_size, number_bands) = image_np.shape
 
-            training_np = get_training_array(training_dataset=training_dataset,
-                                             geometry=geometry,
-                                             attribute=CLASSIFICATION_ATTR)
-            labels = np.unique(training_np[training_np > 0])
+            ground_truth_np = get_training_array(training_dataset=training_dataset,
+                                                 geometry=geometry,
+                                                 attribute=CLASSIFICATION_ATTR)
+            class_labels = np.unique(ground_truth_np[ground_truth_np > 0])
 
-            # split the training data 80:20 into training and validation data
-            X = image_np[training_np > 0, :]
-            y = training_np[training_np > 0]
+            # split the ground truth data 80:20 into training and validation data
+            X = image_np[ground_truth_np > 0, :]
+            y = ground_truth_np[ground_truth_np > 0]
             X_train, X_validation, y_train, y_validation = train_test_split(X, y,
                                                                             train_size=0.8,
                                                                             test_size=0.2,
@@ -82,7 +81,6 @@ class RF4EO_Classify(object):
             # classify the image
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
             image_np = np.nan_to_num(image_np)
-
             try:
                 classified_image_np = classifier.predict(image_np)
             except MemoryError:
@@ -93,7 +91,7 @@ class RF4EO_Classify(object):
                           output_file_path=classified_file_paths(self.Config, image_name),
                           geometry=geometry)
 
-            # accuracy analysis
+            # perform an accuracy analysis
 
             # classify the validation data
             X_validation = np.nan_to_num(X_validation)
@@ -108,7 +106,7 @@ class RF4EO_Classify(object):
             processing_logger.info(msg='')
 
             # then the classification report
-            target_names = [str(name) for name in range(1, len(labels) + 1)]
+            target_names = [str(name) for name in range(1, len(class_labels) + 1)]
             class_report = classification_report(y_validation, y_predict, target_names=target_names)
             processing_logger.info(msg=class_report)
             processing_logger.info(msg='')
