@@ -5,9 +5,8 @@ import numpy as np
 import logging
 from osgeo import gdal, ogr
 
-from src import print_debug
-
 from src.utils.naming import training_file_path, logging_dir_path
+from src import print_debug
 
 
 def get_image_paths(images_directory, identifier: str = None):
