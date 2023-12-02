@@ -53,9 +53,9 @@ class RF4EO_Classify(object):
             X = image_np[training_np > 0, :]
             y = training_np[training_np > 0]
             X_train, X_validation, y_train, y_validation = train_test_split(X, y,
-                                                                train_size=0.8,
-                                                                test_size=0.2,
-                                                                random_state=42)
+                                                                            train_size=0.8,
+                                                                            test_size=0.2,
+                                                                            random_state=42)
 
             # create a Random Forest classifier
             classifier = RandomForestClassifier(n_estimators=NUMBER_OF_TREES,
