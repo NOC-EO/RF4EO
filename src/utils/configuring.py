@@ -18,17 +18,19 @@ class Config(object):
 
             # add sections
             self.PATHS = configuration['PATHS']
+            self.CLASSIFIER = configuration['CLASSIFIER']
             self.SETTINGS = configuration['SETTINGS']
 
             # add defaults if these have not been set
-            if not configuration.has_option('SETTINGS', 'algorithm'):
+            if not configuration.has_option('CLASSIFIER', 'algorithm'):
                 self.SETTINGS['algorithm'] = "gini"
+            if not configuration.has_option('CLASSIFIER', 'number trees'):
+                self.SETTINGS['number trees'] = "1000"
+            if not configuration.has_option('CLASSIFIER', 'number cores'):
+                self.SETTINGS['number cores'] = "-1"
+
             if not configuration.has_option('SETTINGS', 'version'):
                 self.SETTINGS['version'] = "1"
-            if not configuration.has_option('SETTINGS', 'number trees'):
-                self.SETTINGS['number trees'] = "1000"
-            if not configuration.has_option('SETTINGS', 'number cores'):
-                self.SETTINGS['number cores'] = "-1"
             if not configuration.has_option('SETTINGS', 'attribute'):
                 self.SETTINGS['training attribute'] = "id"
             if not configuration.has_option('SETTINGS', 'patch threshold'):

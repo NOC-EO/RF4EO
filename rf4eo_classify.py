@@ -21,11 +21,12 @@ class RF4EO_Classify(object):
 
     def run(self):
 
-        CLASSIFICATION_ATTR = self.Config.SETTINGS['training attribute']
-        NUMBER_OF_TREES = int(self.Config.SETTINGS['number trees'])
-        NUMBER_OF_CORES = int(self.Config.SETTINGS['number cores'])
+        NUMBER_OF_TREES = int(self.Config.CLASSIFIER['number trees'])
+        NUMBER_OF_CORES = int(self.Config.CLASSIFIER['number cores'])
+        ALGORITHM = self.Config.CLASSIFIER['algorithm']
+
         VERBOSE = int(self.Config.SETTINGS['verbose'])
-        ALGORITHM = self.Config.SETTINGS['algorithm']
+        CLASSIFICATION_ATTR = self.Config.SETTINGS['training attribute']
 
         training_dataset = get_training_dataset(configuration=self.Config)
         images_directory = images_dir_path(configuration=self.Config)
