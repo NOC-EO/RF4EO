@@ -20,7 +20,7 @@ class Config(object):
             self.PATHS = configuration['PATHS']
             self.SETTINGS = configuration['SETTINGS']
 
-            # add defaults these have not been set
+            # add defaults if these have not been set
             if not configuration.has_option('SETTINGS', 'version'):
                 self.SETTINGS['version'] = "1"
             if not configuration.has_option('SETTINGS', 'number trees'):
