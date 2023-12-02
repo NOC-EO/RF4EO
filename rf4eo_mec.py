@@ -50,7 +50,7 @@ class RF4EO_MEC(object):
                 image_np = read_geotiff(image_path)[0].squeeze()
                 images_np[image_index] = image_np
                 print_debug(msg=f'good: {image_name}')
-            except ValueError:
+            except AttributeError:
                 print_debug(msg=f'bad: {image_name} {image_np.shape}')
                 continue
 

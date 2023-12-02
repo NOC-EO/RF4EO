@@ -20,13 +20,9 @@ def get_image_paths(images_directory, identifier: str = None):
 
 def read_geotiff(image_file_path):
 
-    try:
-        image_dataset = gdal.Open(image_file_path, gdal.GA_ReadOnly)
-    except IOError:
-        raise Exception(f'IOError: image file could not be read: "{image_file_path}"')
-
-
+    image_dataset = gdal.Open(image_file_path, gdal.GA_ReadOnly)
     image_np = image_dataset.ReadAsArray()
+
     if len(image_np.shape) == 3:
         image_np = np.moveaxis(image_np, 0, -1)
 

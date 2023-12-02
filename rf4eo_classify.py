@@ -45,7 +45,12 @@ class RF4EO_Classify(object):
             print_debug()
             print_debug(msg=f'classifying: "{image_name}"')
             processing_logger = get_logger(self.Config, f'processing_logger_{image_index}', image_name)
-            image_np, geometry = read_geotiff(image_file_path=image_path)
+
+            try:
+                image_np, geometry = read_geotiff(image_file_path=image_path)
+            except AttributeError:
+                print_debug(f'AttributeError: image file could not be read: "{image_path}"')
+                continue
 
             # select bands from image to classify
             # only want to classify Sentinel-2 B2, B3, B4, B8 (red, green, blue and NIR) bands
