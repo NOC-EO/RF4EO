@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
-#    confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay
+#    , precision_score, recall_score,
 from sklearn.model_selection import train_test_split
 
 from src.utils.naming import images_dir_path, classified_file_paths
@@ -94,10 +94,16 @@ class RF4EO_Classify(object):
                           geometry=geometry)
 
             # accuracy analysis
-            # first the confusion matrix
+
+            # classify the validation data
             X_validation = np.nan_to_num(X_validation)
             y_predict = classifier.predict(X_validation)
-            confusion_matrix = pd.crosstab(y_validation, y_predict, margins=True)
+
+            # produce the confusion matrix
+            df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
+            confusion_matrix = pd.crosstab(df['y_validation'], df['y_predicted'],
+                                           rownames=['Ground Truth'],
+                                           colnames=['Predicted'])
             processing_logger.info(msg=confusion_matrix)
             processing_logger.info(msg='')
 
