@@ -31,7 +31,7 @@ class RF4EO_Classify(object):
         # open the training shapefile using OGR
         training_shapefile = get_training_shapefile(configuration=self.Config)
 
-        # find the images to be classified
+        # find the images to be classified as a list of filepaths
         images_directory = images_dir_path(configuration=self.Config)
         images_to_classify = get_image_paths(images_directory=images_directory)
         number_of_images = len(images_to_classify)
@@ -41,16 +41,16 @@ class RF4EO_Classify(object):
 
         for image_index, image_path in enumerate(images_to_classify):
 
-            # lets get started by seeing if the image has already been classified
+            # if this image has already been classified skip to next image
             image_name = os.path.split(image_path)[1]
             classified_filepath = classified_file_path(self.Config, image_name)
             if os.path.exists(classified_filepath):
                 print_debug(msg=f'WARNING: already classified "{image_name}" skipping')
                 continue
 
-            # start by importing the image geotiff to a numpy array using GDAL
+            # import the image geotiff to a numpy array using GDAL
             # since a numpy array does not know where it is located
-            # also need to keep the geometrical information
+            # also need to keep the geometrical information for later
             print_debug(msg=f'classifying: "{image_name}"')
             try:
                 image_np, geometry = read_geotiff(image_file_path=image_path)
@@ -98,7 +98,7 @@ class RF4EO_Classify(object):
                 print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
 
-            # then classify the full image using the trained RF classifier
+            # then classify the full image using the trained classifier
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
             try:
                 classified_image_np = classifier.predict(X=np.nan_to_num(image_np))
@@ -107,7 +107,7 @@ class RF4EO_Classify(object):
                 continue
 
             # save classified image to disc as a geotiff again using GDAL
-            # using the same geometrical information that came from the source image
+            # with the same geometrical information that came from the source image
             write_geotiff(output_array=classified_image_np.reshape((y_size, x_size)),
                           output_file_path=classified_filepath,
                           geometry=geometry)
