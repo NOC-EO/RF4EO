@@ -112,8 +112,8 @@ class RF4EO_Classify(object):
                           output_file_path=classified_filepath,
                           geometry=geometry)
 
-            # a vital step in any supervised classification is an accuracy assessment
-            # performed here in four parts that log the metrics to a file on disc
+            # a vital step in any supervised classification analysis is an accuracy assessment
+            # performed here in four parts that each log metrics to a file on disc
 
             # open a logger and write a header
             assessment_logger = get_logger(self.Config, f'logger_{image_index}', image_name)
