@@ -99,7 +99,7 @@ class RF4EO_Classify(object):
             try:
                 classified_image_np = classifier.predict(image_np)
             except MemoryError:
-                print_debug(msg=f'MemoryError: need to slice ...')
+                print_debug(msg=f'MemoryError: acquire a bigger machine ...')
 
             # save classified image to file
             write_geotiff(output_array=classified_image_np.reshape((y_size, x_size)),
