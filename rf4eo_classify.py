@@ -113,7 +113,7 @@ class RF4EO_Classify(object):
             processing_logger.info(msg='')
 
             # lastly log the overall accuracy and send to console
-            accuracy_message = f'kappa = {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
+            accuracy_message = f'Kappa = {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
             print_debug(msg=accuracy_message)
             processing_logger.info(msg=accuracy_message)
 
