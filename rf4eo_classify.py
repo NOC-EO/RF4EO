@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 from random import randint
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
 
 from src.utils.naming import images_dir_path, classified_file_path
 from src.utils.filing import get_image_paths, get_training_dataset, get_training_array, \
@@ -38,13 +38,17 @@ class RF4EO_Classify(object):
 
         for image_index, image_path in enumerate(images_to_classify):
 
+            # lets get started by seeing if the image has already been classified
             image_name = os.path.split(image_path)[1]
             classified_filepath = classified_file_path(self.Config, image_name)
             if os.path.exists(classified_filepath):
                 print_debug(msg=f'WARNING: already classified "{image_name}" skipping')
                 continue
-            print_debug(msg=f'classifying: "{image_name}"')
 
+            # start by importing the image geotiff to a numpy array using GDAL
+            # since a numpy array does not know where it is located also
+            # keep the relevant geometrical information
+            print_debug(msg=f'classifying: "{image_name}"')
             try:
                 image_np, geometry = read_geotiff(image_file_path=image_path)
             except AttributeError:
@@ -52,10 +56,12 @@ class RF4EO_Classify(object):
                 continue
 
             # select bands from image to classify
-            # only want to classify Sentinel-2 B2, B3, B4, B8 (red, green, blue and NIR) bands
+            # e.g. to classify Sentinel-2 B2, B3, B4, B8 (red, green, blue and NIR) bands
+            # but this will depend on the satellite bands in the images being used
             image_np = image_np[:, :, :4]
             (y_size, x_size, number_bands) = image_np.shape
 
+            # import the ground truth data from the training shapefile as a numpy array
             ground_truth_np = get_training_array(training_dataset=training_dataset,
                                                  geometry=geometry,
                                                  attribute=CLASSIFICATION_ATTR)
@@ -92,11 +98,14 @@ class RF4EO_Classify(object):
                 continue
 
             # save classified image to file
+            # using the same geometry that came from the source image
             write_geotiff(output_array=classified_image_np.reshape((y_size, x_size)),
                           output_file_path=classified_filepath,
                           geometry=geometry)
 
             # perform four part accuracy assessment and log the metrics
+
+            # open a logger and write a header
             assessment_logger = get_logger(self.Config, f'logger_{image_index}', image_name)
             assessment_logger.info(msg='Random Forest Classifier')
             assessment_logger.info(msg='')
@@ -111,7 +120,8 @@ class RF4EO_Classify(object):
                 assessment_logger.info(msg=f'band {band_index+1} importance: {importance:.2f}')
             assessment_logger.info(msg='')
 
-            # then classify the validation data and log the confusion matrix
+            # then classify the validation data (20% of the training data split)
+            # and log the confusion matrix that is produced
             y_predict = classifier.predict(X=np.nan_to_num(X_validation))
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
