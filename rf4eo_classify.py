@@ -105,7 +105,7 @@ class RF4EO_Classify(object):
                 assessment_logger.info(msg=f'band {band_index+1} importance: {importance:.2f}')
             assessment_logger.info(msg='')
 
-            # then classify the validation data and produce the confusion matrix
+            # then classify the validation data and log the confusion matrix
             y_predict = classifier.predict(np.nan_to_num(X_validation))
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
@@ -117,7 +117,9 @@ class RF4EO_Classify(object):
 
             # next log the classification report
             target_names = [str(name) for name in range(1, len(class_labels) + 1)]
-            class_report = classification_report(y_validation, y_predict, target_names=target_names)
+            class_report = classification_report(y_true=y_validation,
+                                                 y_pred=y_predict,
+                                                 target_names=target_names)
             assessment_logger.info(msg=class_report)
             assessment_logger.info(msg='')
 
