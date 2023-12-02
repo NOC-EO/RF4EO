@@ -79,13 +79,12 @@ class RF4EO_Classify(object):
                 processing_logger.info(msg=f'band {band} importance: {importance:.2f}')
             processing_logger.info(msg='')
 
-            # classify the entire image
-            new_shape = (image_np.shape[0] * image_np.shape[1], image_np.shape[2])
-            image_ar = image_np.reshape(new_shape)
-            image_ar = np.nan_to_num(image_ar)
+            # classify the image
+            image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
+            image_np = np.nan_to_num(image_np)
 
             try:
-                classified_image_np = classifier.predict(image_ar)
+                classified_image_np = classifier.predict(image_np)
             except MemoryError:
                 print_debug(msg=f'MemoryError: need to slice ...')
 
@@ -94,7 +93,7 @@ class RF4EO_Classify(object):
                           output_file_path=classified_file_paths(self.Config, image_name),
                           geometry=geometry)
 
-            # perform accuracy analysis and log the results
+            # accuracy analysis
             # first the confusion matrix
             X_validation = np.nan_to_num(X_validation)
             y_predict = classifier.predict(X_validation)
@@ -102,16 +101,16 @@ class RF4EO_Classify(object):
             processing_logger.info(msg=confusion_matrix)
             processing_logger.info(msg='')
 
-            # and then the classification report
+            # then the classification report
             target_names = [str(name) for name in range(1, len(labels) + 1)]
             class_report = classification_report(y_validation, y_predict, target_names=target_names)
             processing_logger.info(msg=class_report)
             processing_logger.info(msg='')
 
             # lastly log the overall accuracy and send to console
-            message = f'kappa = {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
-            print_debug(msg=message)
-            processing_logger.info(msg=message)
+            accuracy_message = f'kappa = {(accuracy_score(y_validation, y_predict) * 100):.1f}%'
+            print_debug(msg=accuracy_message)
+            processing_logger.info(msg=accuracy_message)
 
 
 if __name__ == '__main__':
