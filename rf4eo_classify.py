@@ -114,7 +114,8 @@ class RF4EO_Classify(object):
 
             # produce the confusion matrix
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
-            confusion_matrix = pd.crosstab(df['y_validation'], df['y_predicted'],
+            confusion_matrix = pd.crosstab(index=df['y_validation'],
+                                           columns=df['y_predicted'],
                                            rownames=['Ground Truth'],
                                            colnames=['Predicted'])
             processing_logger.info(msg=confusion_matrix)
