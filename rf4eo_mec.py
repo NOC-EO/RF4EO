@@ -13,6 +13,7 @@ class RF4EO_MEC(object):
 
     def __init__(self):
         self.Config = Config()
+        print_debug()
 
     def run(self):
 
@@ -35,7 +36,7 @@ class RF4EO_MEC(object):
         print_debug(msg=f'image shape: ({y_size}, {x_size})')
         print_debug()
 
-        # import the classied images
+        # import the classified images
         images_np = np.zeros((number_images, y_size, x_size))
         for image_index, image_path in enumerate(MEC_image_paths):
             image_name = os.path.split(image_path)[1]

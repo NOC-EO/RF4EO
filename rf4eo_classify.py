@@ -18,6 +18,7 @@ class RF4EO_Classify(object):
 
     def __init__(self):
         self.Config = Config()
+        print_debug()
 
     def run(self):
 
