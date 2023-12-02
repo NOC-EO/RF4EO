@@ -41,6 +41,10 @@ class RF4EO_Classify(object):
             print_debug(msg=f'classifying: "{image_name}"')
 
             image_np, geometry = read_geotiff(image_file_path=image_path)
+
+            # select bands from image to classify
+            # only want to classify Sentinel-2 B2, B3, B4, B8 (red, green, blue and NIR) bands
+            image_np = image_np[:4]
             (y_size, x_size, number_bands) = image_np.shape
 
             ground_truth_np = get_training_array(training_dataset=training_dataset,
