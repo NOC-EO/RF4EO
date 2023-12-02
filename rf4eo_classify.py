@@ -39,9 +39,9 @@ class RF4EO_Classify(object):
             image_name = os.path.split(image_path)[1]
             classified_filepath = classified_file_path(self.Config, image_name)
             if os.path.exists(classified_filepath):
-                print_debug(msg=f'WARNING: already classified "{classified_filepath}" skipping')
+                print_debug(msg=f'WARNING: already classified "{image_name}" skipping')
                 continue
-                
+
             print_debug()
             print_debug(msg=f'classifying: "{image_name}"')
             processing_logger = get_logger(self.Config, f'processing_logger_{image_index}', image_name)
