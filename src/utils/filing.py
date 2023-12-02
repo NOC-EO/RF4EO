@@ -22,8 +22,8 @@ def read_geotiff(image_file_path):
 
     try:
         image_dataset = gdal.Open(image_file_path, gdal.GA_ReadOnly)
-    except:
-        raise Exception(f'ERROR: image file could not be read: "{image_file_path}"')
+    except IOError:
+        raise Exception(f'IOError: image file could not be read: "{image_file_path}"')
 
 
     image_np = image_dataset.ReadAsArray()
