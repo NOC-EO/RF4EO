@@ -53,7 +53,10 @@ class RF4EO_MEC(object):
                 print_debug(msg=f'good: {image_name}')
                 good_images += 1
             except AttributeError:
-                print_debug(msg=f'bad: "{image_name}" either wrong type or wrong shape {image_np.shape}')
+                print_debug(msg=f'bad: "{image_name}"  wrong type of file {image_np.shape}')
+                continue
+            except ValueError:
+                print_debug(msg=f'bad: "{image_name}" wrong shape {image_np.shape}')
                 continue
 
         # aggregate the classes of interest
@@ -72,11 +75,15 @@ class RF4EO_MEC(object):
             aggregated_np[mask_np] = 0
 
         seagrass_filepath = seagrass_file_path(self.Config, good_images)
-        write_geotiff(output_array=aggregated_np,
-                      output_file_path=seagrass_filepath,
-                      geometry=geometry)
-        print_debug()
-        print_debug(msg=f'saved multi-ensemble classification: "{os.path.split(seagrass_filepath)[1]}"')
+        seagrass_filename = os.path.split(seagrass_filepath)[1]
+        if os.path.exists(seagrass_filepath):
+            print_debug(f'WARNING: same parameters already used "{seagrass_filename}"')
+        else:
+            write_geotiff(output_array=aggregated_np,
+                          output_file_path=seagrass_filepath,
+                          geometry=geometry)
+            print_debug()
+            print_debug(msg=f'saved multi-ensemble classification: "{seagrass_filename}"')
 
 
 if __name__ == '__main__':
