@@ -11,7 +11,7 @@ def base_dir_path(configuration):
 
 def results_dir_path(configuration):
     results_path = os.path.join(base_dir_path(configuration),
-                                f'results_{configuration.SETTINGS["image identifier"]}')
+                                f'results{configuration.SETTINGS["image identifier"]}')
     if not os.path.isdir(results_path):
         os.makedirs(results_path)
     return results_path
@@ -19,7 +19,7 @@ def results_dir_path(configuration):
 
 def classified_dir_path(configuration):
     classification_path = os.path.join(base_dir_path(configuration),
-                                       f'classified_{configuration.SETTINGS["image identifier"]}')
+                                       f'classified{configuration.SETTINGS["image identifier"]}')
     if not os.path.isdir(classification_path):
         os.makedirs(classification_path)
     return classification_path
@@ -27,7 +27,7 @@ def classified_dir_path(configuration):
 
 def images_dir_path(configuration):
     images_path = os.path.join(base_dir_path(configuration),
-                               f'images_{configuration.SETTINGS["image identifier"]}')
+                               f'images{configuration.SETTINGS["image identifier"]}')
     if not os.path.isdir(images_path):
         print_debug(f'ERROR: directory with images required: "{images_path}"', force_exit=True)
     return images_path
@@ -42,7 +42,7 @@ def training_file_path(configuration):
 
 
 def logging_dir_path(configuration):
-    logging_path = os.path.join(base_dir_path(configuration), f'logs_{configuration.SETTINGS["image identifier"]}')
+    logging_path = os.path.join(base_dir_path(configuration), f'logs{configuration.SETTINGS["image identifier"]}')
     if not os.path.isdir(logging_path):
         os.makedirs(logging_path)
     return logging_path
@@ -56,7 +56,7 @@ def classified_file_path(configuration, image_name):
 
 def seagrass_file_path(configuration, number_images):
     seagrass_filename = f'{configuration.PATHS["study location"]}_' +\
-                        f'seagrass_{configuration.SETTINGS["image identifier"]}_' +\
+                        f'seagrass{configuration.SETTINGS["image identifier"]}_' +\
                         f'v{configuration.SETTINGS["version"]}_' +\
                         f'MEC{configuration.SETTINGS["MEC"]}-{number_images}.tif'
     seagrass_filepath = os.path.join(results_dir_path(configuration), seagrass_filename)

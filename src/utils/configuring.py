@@ -31,7 +31,7 @@ class Config(object):
 
             if not configuration.has_option('SETTINGS', 'version'):
                 self.SETTINGS['version'] = "1"
-            if not configuration.has_option('SETTINGS', 'attribute'):
+            if not configuration.has_option('SETTINGS', 'training attribute'):
                 self.SETTINGS['training attribute'] = "id"
             if not configuration.has_option('SETTINGS', 'patch threshold'):
                 self.SETTINGS['patch threshold'] = "0"
@@ -39,7 +39,9 @@ class Config(object):
                 self.SETTINGS['classes to map'] = "0"
             if not configuration.has_option('SETTINGS', 'image identifier'):
                 self.SETTINGS['image identifier'] = ""
-
+            if self.SETTINGS['image identifier'] != "":
+                print_debug('woof')
+                self.SETTINGS['image identifier'] = '_' + self.SETTINGS['image identifier']
         except KeyError as key_ex:
 
             print_debug(f'badly formatted: "{os.path.abspath(CONFIG_FILE)}"')

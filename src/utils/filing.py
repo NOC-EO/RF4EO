@@ -10,10 +10,8 @@ from src import print_debug
 
 
 def get_image_paths(images_directory, identifier: str = None):
-    if identifier:
-        image_file_paths = glob.glob(pathname=images_directory + f'\\*{identifier}.tif', recursive=False)
-    else:
-        image_file_paths = glob.glob(pathname=images_directory + '\\*.tif', recursive=False)
+    pattern = ('\\*.tif', f'\\*{identifier}.tif')[bool(identifier)]
+    image_file_paths = glob.glob(pathname=images_directory + pattern, recursive=False)
     return sorted(image_file_paths)
 
 

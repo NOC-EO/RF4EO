@@ -48,17 +48,17 @@ class RF4EO_Classify(object):
             image_name = os.path.split(image_path)[1]
             classified_filepath = classified_file_path(self.Config, image_name)
             if os.path.exists(classified_filepath):
-                print_debug(msg=f'WARNING: already classified "{image_name}" skipping')
+                print_debug(msg=f'WARNING: already classified {image_name}')
                 continue
 
             # import the image geotiff to a numpy array using GDAL
             # since a numpy array does not know where it is located
             # also need to keep the geometrical information for later
-            print_debug(msg=f'classifying: "{image_name}"')
+            print_debug(msg=f'classifying: {image_name}')
             try:
                 image_np, geometry = read_geotiff(image_file_path=image_path)
             except AttributeError:
-                print_debug(f'AttributeError: image file could not be read: "{image_path}"')
+                print_debug(f'AttributeError: image file could not be read: {image_path}')
                 continue
 
             # select the required bands from image to be classified
