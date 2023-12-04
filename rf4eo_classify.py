@@ -159,7 +159,7 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg=class_report)
             assessment_logger.info(msg='')
 
-            # lastly log the overall accuracy
+            # finally log the overall accuracy
             overall_accuracy = accuracy_score(y_true=y_validation, y_pred=y_predict)
             print_debug(msg=f'OOA: {overall_accuracy*100:.1f}%')
             print_debug()
