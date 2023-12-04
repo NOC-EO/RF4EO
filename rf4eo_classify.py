@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+import json
 import numpy as np
 import pandas as pd
 from random import randint
@@ -29,6 +30,7 @@ class RF4EO_Classify(object):
         ALGORITHM = self.Config.CLASSIFIER['algorithm']
         MAX_FEATURES = self.Config.CLASSIFIER['max features']
         MAX_FEATURES = (MAX_FEATURES, None)[MAX_FEATURES == 'None']
+        GEOTIFFS = json.loads(self.Config.SETTINGS['geotiffs'])
 
         VERBOSE = int(self.Config.SETTINGS['verbose'])
         CLASSIFICATION_ATTR = self.Config.SETTINGS['training attribute']
