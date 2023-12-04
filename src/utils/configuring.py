@@ -33,7 +33,8 @@ class Config(object):
 
             if not configuration.has_option('SETTINGS', 'version'):
                 self.SETTINGS['version'] = "1"
-            if not configuration.has_option('SETTINGS', 'training attribute'):
+            if not configuration.has_option('SETTINGS', 'training attribute') or \
+                    configuration.has_option('SETTINGS', 'training attribute') == "":
                 self.SETTINGS['training attribute'] = "id"
             if not configuration.has_option('SETTINGS', 'patch threshold'):
                 self.SETTINGS['patch threshold'] = "0"
