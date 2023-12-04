@@ -101,11 +101,11 @@ class RF4EO_Classify(object):
             # train the classifier - with correctly prepared data i.e. no nan or inf values
             X_train = np.nan_to_num(X_train)
             fit_estimator = classifier.fit(X=X_train, y=y_train)
-            print_debug(f'OOB: {classifier.oob_score_:.1f}')
+            print_debug(f'OOB: {classifier.oob_score_*100:.1f}%')
             if VERBOSE:
                 print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
-                
+
             # then classify the full image using the trained classifier
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
             try:
@@ -131,7 +131,7 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg=f'fitting criterion:  {ALGORITHM}')
             assessment_logger.info(msg=f'max features:  {MAX_FEATURES}')
             assessment_logger.info(msg=f'random seed:  {seed}')
-            assessment_logger.info(msg=f'out of bag:  {classifier.oob_score_:.2f}')
+            assessment_logger.info(msg=f'out of bag:  {classifier.oob_score_*100:.1f}%')
             assessment_logger.info(msg='')
 
             # first log the relative importance of each band
@@ -160,11 +160,10 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg='')
 
             # lastly log the overall accuracy
-            kappa = accuracy_score(y_true=y_validation, y_pred=y_predict) * 100
-            accuracy_message = f'Kappa: {kappa:.1f}%'
-            print_debug(msg=accuracy_message)
+            overall_accuracy = accuracy_score(y_true=y_validation, y_pred=y_predict)
+            print_debug(msg=f'OOA: {overall_accuracy*100:.1f}%')
             print_debug()
-            assessment_logger.info(msg=accuracy_message)
+            assessment_logger.info(msg=f'Kappa: {overall_accuracy*100:.1f}%')
 
 
 if __name__ == '__main__':
