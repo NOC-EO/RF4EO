@@ -21,9 +21,9 @@ class RF4EO_Classify(object):
 
     def run(self):
 
-        # import the configuration constants required that came from
-        # the ini file which was parsed by the configuring.py script
-        # and stored in the Config class attribute
+        # load the required configuration from the ini file
+        # which was parsed by the configuring script
+        # and made available here using a class attribute
         NUMBER_OF_TREES = int(self.Config.CLASSIFIER['number trees'])
         NUMBER_OF_CORES = int(self.Config.CLASSIFIER['number cores'])
         ALGORITHM = self.Config.CLASSIFIER['algorithm']
@@ -161,7 +161,7 @@ class RF4EO_Classify(object):
 
             # finally log the overall accuracy
             overall_accuracy = accuracy_score(y_true=y_validation, y_pred=y_predict)
-            print_debug(msg=f'OOA: {overall_accuracy*100:.1f}%')
+            print_debug(msg=f'OAA: {overall_accuracy*100:.1f}%')
             print_debug()
             assessment_logger.info(msg=f'Kappa: {overall_accuracy*100:.1f}%')
 
