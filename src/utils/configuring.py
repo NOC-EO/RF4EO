@@ -28,6 +28,8 @@ class Config(object):
                 self.SETTINGS['number trees'] = "1000"
             if not configuration.has_option('CLASSIFIER', 'number cores'):
                 self.SETTINGS['number cores'] = "-1"
+            if not configuration.has_option('CLASSIFIER', 'max features'):
+                self.SETTINGS['max features'] = "None"
 
             if not configuration.has_option('SETTINGS', 'version'):
                 self.SETTINGS['version'] = "1"
@@ -40,7 +42,6 @@ class Config(object):
             if not configuration.has_option('SETTINGS', 'image identifier'):
                 self.SETTINGS['image identifier'] = ""
             if self.SETTINGS['image identifier'] != "":
-                print_debug('woof')
                 self.SETTINGS['image identifier'] = '_' + self.SETTINGS['image identifier']
         except KeyError as key_ex:
 

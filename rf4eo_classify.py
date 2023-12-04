@@ -27,6 +27,8 @@ class RF4EO_Classify(object):
         NUMBER_OF_TREES = int(self.Config.CLASSIFIER['number trees'])
         NUMBER_OF_CORES = int(self.Config.CLASSIFIER['number cores'])
         ALGORITHM = self.Config.CLASSIFIER['algorithm']
+        MAX_FEATURES = self.Config.CLASSIFIER['max features']
+        MAX_FEATURES = (MAX_FEATURES, None)[MAX_FEATURES == 'None']
 
         VERBOSE = int(self.Config.SETTINGS['verbose'])
         CLASSIFICATION_ATTR = self.Config.SETTINGS['training attribute']
@@ -91,16 +93,19 @@ class RF4EO_Classify(object):
             # create a Random Forest classifier
             classifier = RandomForestClassifier(n_estimators=NUMBER_OF_TREES,
                                                 criterion=ALGORITHM,
+                                                oob_score=True,
+                                                max_features=MAX_FEATURES,
                                                 verbose=VERBOSE,
                                                 n_jobs=NUMBER_OF_CORES)
 
             # train the classifier - with correctly prepared data i.e. no nan or inf values
             X_train = np.nan_to_num(X_train)
             fit_estimator = classifier.fit(X=X_train, y=y_train)
+            print_debug(f'OOB: {classifier.oob_score_:.1f}')
             if VERBOSE:
                 print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
-
+                
             # then classify the full image using the trained classifier
             image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
             try:
@@ -124,7 +129,9 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg='')
             assessment_logger.info(msg=f'number of trees: {NUMBER_OF_TREES}')
             assessment_logger.info(msg=f'fitting criterion:  {ALGORITHM}')
+            assessment_logger.info(msg=f'max features:  {MAX_FEATURES}')
             assessment_logger.info(msg=f'random seed:  {seed}')
+            assessment_logger.info(msg=f'out of bag:  {classifier.oob_score_:.2f}')
             assessment_logger.info(msg='')
 
             # first log the relative importance of each band
