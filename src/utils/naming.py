@@ -25,6 +25,13 @@ def classified_dir_path(configuration):
     return classification_path
 
 
+def classifier_dir_path(configuration):
+    classifier_path = os.path.join(base_dir_path(configuration),
+                                   f'RFC{configuration.SETTINGS["image identifier"]}')
+    if not os.path.isdir(classifier_path):
+        os.makedirs(classifier_path)
+    return classifier_path
+
 def images_dir_path(configuration):
     images_path = os.path.join(base_dir_path(configuration),
                                f'images{configuration.SETTINGS["image identifier"]}')
@@ -61,3 +68,10 @@ def seagrass_file_path(configuration, number_images):
                         f'MEC{configuration.SETTINGS["MEC"]}-{number_images}.tif'
     seagrass_filepath = os.path.join(results_dir_path(configuration), seagrass_filename)
     return seagrass_filepath
+
+
+def classifier_file_path(configuration, image_name):
+    classifier_filename = image_name.replace(".tif", f'_classifier_v{configuration.SETTINGS["version"]}.pkl')
+    classifier_filename = classifier_filename.replace(classifier_filename[:6], configuration.PATHS['study location'])
+    classifier_filepath = os.path.join(classifier_dir_path(configuration), classifier_filename)
+    return classifier_filepath

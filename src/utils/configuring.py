@@ -22,14 +22,18 @@ class Config(object):
             self.SETTINGS = configuration['SETTINGS']
 
             # add defaults if these have not been set
+
+            if not configuration.has_option('PATHS', 'piggy back location'):
+                self.PATHS['piggy back location'] = "None"
+
             if not configuration.has_option('CLASSIFIER', 'algorithm'):
-                self.SETTINGS['algorithm'] = "gini"
+                self.CLASSIFIER['algorithm'] = "gini"
             if not configuration.has_option('CLASSIFIER', 'number trees'):
-                self.SETTINGS['number trees'] = "1000"
+                self.CLASSIFIER['number trees'] = "1000"
             if not configuration.has_option('CLASSIFIER', 'number cores'):
-                self.SETTINGS['number cores'] = "-1"
+                self.CLASSIFIER['number cores'] = "-1"
             if not configuration.has_option('CLASSIFIER', 'max features'):
-                self.SETTINGS['max features'] = "None"
+                self.CLASSIFIER['max features'] = "None"
 
             if not configuration.has_option('SETTINGS', 'version'):
                 self.SETTINGS['version'] = "1"

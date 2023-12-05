@@ -2,6 +2,7 @@
 import os
 import sys
 import json
+import pickle
 import numpy as np
 import pandas as pd
 from random import randint
@@ -9,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 
-from src.utils.naming import images_dir_path, classified_file_path
+from src.utils.naming import images_dir_path, classified_file_path, classifier_file_path
 from src.utils.filing import get_image_paths, read_geotiff, write_geotiff,\
     get_logger, load_ground_truth_data
 from src import print_debug, Config
@@ -95,13 +96,18 @@ class RF4EO_Classify(object):
             # train the classifier - with correctly prepared data i.e. no nan or inf values
             X_train = np.nan_to_num(X_train)
             fit_estimator = classifier.fit(X=X_train, y=y_train)
+
+            pickle_file = open(classifier_file_path(self.Config, image_name), 'wb')
+            pickle.dump(classifier, pickle_file)
+            pickle_file.close()
+
             print_debug(f'OOB: {classifier.oob_score_*100:.1f}%')
             if VERBOSE:
                 print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
 
             # then classify the full image using the trained classifier
-            image_np = image_np.reshape((image_np.shape[0] * image_np.shape[1], image_np.shape[2]))
+            image_np = image_np.reshape((y_size * x_size, number_bands))
             try:
                 classified_image_np = classifier.predict(X=np.nan_to_num(image_np))
             except MemoryError:
