@@ -9,7 +9,7 @@ from src.utils.filing import get_image_paths, read_geotiff, write_geotiff
 from src import print_debug, Config
 
 
-class RF4EO_MEC(object):
+class RF4EO_FOCUS(object):
 
     def __init__(self):
         self.Config = Config()
@@ -94,5 +94,5 @@ if __name__ == '__main__':
         warnings.simplefilter('ignore')
 
     # make an instance and implement the run function
-    obj = RF4EO_MEC()
+    obj = RF4EO_FOCUS()
     obj.run()
