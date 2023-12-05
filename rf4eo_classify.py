@@ -10,8 +10,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 
 from src.utils.naming import images_dir_path, classified_file_path
-from src.utils.filing import get_image_paths, get_training_shapefile, get_training_array, \
-    read_geotiff, write_geotiff, get_logger
+from src.utils.filing import get_image_paths, read_geotiff, write_geotiff,\
+    get_logger, load_ground_truth_data
 from src import print_debug, Config
 
 
@@ -30,13 +30,9 @@ class RF4EO_Classify(object):
         ALGORITHM = self.Config.CLASSIFIER['algorithm']
         MAX_FEATURES = self.Config.CLASSIFIER['max features']
         MAX_FEATURES = (MAX_FEATURES, None)[MAX_FEATURES == 'None']
+
         GEOTIFFS = json.loads(self.Config.SETTINGS['geotiffs'])
-
         VERBOSE = int(self.Config.SETTINGS['verbose'])
-        CLASSIFICATION_ATTR = self.Config.SETTINGS['training attribute']
-
-        # open the training shapefile using OGR
-        training_shapefile = get_training_shapefile(configuration=self.Config)
 
         # find the images to be classified as a list of filepaths
         images_directory = images_dir_path(configuration=self.Config)
@@ -71,13 +67,9 @@ class RF4EO_Classify(object):
             image_np = image_np[:, :, :4]
             (y_size, x_size, number_bands) = image_np.shape
 
-            # open the training shapefile as a numpy array using GDAL
+            # read the training shapefile as a numpy array using GDAL
             # with the geometry from the image being classified
-            # and using the correct shapefile attribute
-            ground_truth_np = get_training_array(training_dataset=training_shapefile,
-                                                 geometry=geometry,
-                                                 attribute=CLASSIFICATION_ATTR)
-            class_labels = np.unique(ground_truth_np[ground_truth_np > 0])
+            ground_truth_np = load_ground_truth_data(configuration=self.Config, geometry=geometry)
 
             # transform the image and ground truth data numpy arrays into 1D arrays
             # masked to values where the ground truth data is not zero
@@ -154,6 +146,7 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg='')
 
             # next log the classification report
+            class_labels = np.unique(y)
             target_names = [str(name) for name in range(1, len(class_labels) + 1)]
             class_report = classification_report(y_true=y_validation,
                                                  y_pred=y_predict,

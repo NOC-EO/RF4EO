@@ -52,44 +52,36 @@ def write_geotiff(output_array, output_file_path, geometry):
     output_ds.FlushCache()
 
 
-def get_training_shapefile(configuration):
+def load_ground_truth_data(configuration, geometry):
 
     ATTRIBUTE = configuration.SETTINGS['training attribute']
+    training_filepath = training_file_path(configuration)
+    (geotransform, projection, y_size, x_size) = geometry
 
     try:
-        training_dataset = ogr.Open(training_file_path(configuration))
+        training_ds = ogr.Open(training_filepath)
     except IOError as ex:
-        print_debug(f'ERROR: could not open training shapefile {ex}', force_exit=True)
+        print_debug(ex)
+        print_debug(f'ERROR: could not open training shapefile "{os.path.split(training_filepath)[1]}"',
+                    force_exit=True)
 
-    layer_definition = training_dataset.GetLayer().GetLayerDefn()
+    layer_definition = training_ds.GetLayer().GetLayerDefn()
     attributes = [(layer_definition.GetFieldDefn(field_index)).name
                   for field_index in range(layer_definition.GetFieldCount())]
-
     if ATTRIBUTE not in attributes:
         print_debug(f'ERROR: "{ATTRIBUTE}" not in the training shapefile')
         print_debug(f'       available attributes are: {attributes}', force_exit=True)
 
-    return training_dataset
+    destination_ds = gdal.GetDriverByName('MEM').Create('', x_size, y_size, 1, gdal.GDT_Byte)
+    destination_ds.SetProjection(projection)
+    destination_ds.SetGeoTransform(geotransform)
+    destination_raster_band = destination_ds.GetRasterBand(1)
+    destination_raster_band.Fill(0)
+    destination_raster_band.SetNoDataValue(0)
+    gdal.RasterizeLayer(destination_ds, [1], training_ds.GetLayer(), None, None, [1],
+                        [f'ATTRIBUTE={ATTRIBUTE}', "ALL_TOUCHED=TRUE"])
 
-
-def get_training_array(training_dataset, geometry, attribute):
-
-    shape_layer = training_dataset.GetLayer()
-
-    (geotransform, projection, y_size, x_size) = geometry
-    mem_drv = gdal.GetDriverByName('MEM')
-    mem_raster = mem_drv.Create('', x_size, y_size, 1, gdal.GDT_UInt16)
-    mem_raster.SetProjection(projection)
-    mem_raster.SetGeoTransform(geotransform)
-    mem_band = mem_raster.GetRasterBand(1)
-    mem_band.Fill(0)
-    mem_band.SetNoDataValue(0)
-
-    att_ = 'ATTRIBUTE=' + attribute
-    err = gdal.RasterizeLayer(mem_raster, [1], shape_layer, None, None, [1], [att_, "ALL_TOUCHED=TRUE"])
-    assert err == gdal.CE_None
-
-    training_np = mem_raster.ReadAsArray()
+    training_np = destination_ds.ReadAsArray()
 
     return training_np
 
