@@ -39,14 +39,15 @@ class RF4EO_PB(object):
             if os.path.exists(classified_filepath):
                 print_debug(msg=f'WARNING: already classified {image_name}')
                 continue
-
             print_debug(msg=f'classifying: {image_name}')
+            
             try:
                 image_np, geometry = read_geotiff(image_file_path=image_path)
             except AttributeError:
                 print_debug(f'AttributeError: image file could not be read: {image_path}')
                 continue
             (y_size, x_size, number_bands) = image_np.shape
+            image_np = image_np.reshape((y_size * x_size, number_bands))
 
             try:
                 classifier_file = open(classifier_file_path(PB_config, image_name), 'rb')
@@ -56,8 +57,7 @@ class RF4EO_PB(object):
             classifier = pickle.load(classifier_file)
             classifier_file.close()
 
-            # then classify the full image using the trained classifier
-            image_np = image_np.reshape((y_size * x_size, number_bands))
+            # classify the image using the imported classifier
             try:
                 classified_image_np = classifier.predict(X=np.nan_to_num(image_np))
             except MemoryError:
