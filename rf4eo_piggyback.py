@@ -17,10 +17,10 @@ class RF4EO_PB(object):
 
     def run(self):
 
-        PB_LOCATION = self.PATHS['piggy back location']
+        PB_LOCATION = self.Config.PATHS['piggy-back location']
         if PB_LOCATION == 'None':
             print_debug('ERROR: need to set the piggy back location', force_exit=True)
-        PB_config = copy.copydeep(self.Config)
+        PB_config = copy.deepcopy(self.Config)
         PB_config.PATHS['study location'] = PB_LOCATION
 
         # find the images to be classified as a list of filepaths
@@ -40,9 +40,6 @@ class RF4EO_PB(object):
                 print_debug(msg=f'WARNING: already classified {image_name}')
                 continue
 
-            # import the image geotiff to a numpy array using GDAL
-            # since a numpy array does not know where it is located
-            # also need to keep the geometrical information for later
             print_debug(msg=f'classifying: {image_name}')
             try:
                 image_np, geometry = read_geotiff(image_file_path=image_path)
@@ -51,7 +48,11 @@ class RF4EO_PB(object):
                 continue
             (y_size, x_size, number_bands) = image_np.shape
 
-            classifier_file = open(classifier_file_path(PB_config, image_name), 'rb')
+            try:
+                classifier_file = open(classifier_file_path(PB_config, image_name), 'rb')
+            except FileNotFoundError:
+                print_debug(f'FileNotFoundError: "{classifier_file}"')
+                continue
             classifier = pickle.load(classifier_file)
             classifier_file.close()
 
@@ -63,8 +64,6 @@ class RF4EO_PB(object):
                 print_debug(msg=f'MemoryError: acquire a bigger machine...')
                 continue
 
-            # save classified image to disc as a geotiff again using GDAL
-            # with the same geometrical information that came from the source image
             write_geotiff(output_array=classified_image_np.reshape((y_size, x_size)),
                           output_file_path=classified_filepath,
                           geometry=geometry)

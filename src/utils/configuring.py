@@ -23,8 +23,8 @@ class Config(object):
 
             # add defaults if these have not been set
 
-            if not configuration.has_option('PATHS', 'piggy back location'):
-                self.PATHS['piggy back location'] = "None"
+            if not configuration.has_option('PATHS', 'piggy-back location'):
+                self.PATHS['piggy-back location'] = "None"
 
             if not configuration.has_option('CLASSIFIER', 'algorithm'):
                 self.CLASSIFIER['algorithm'] = "gini"

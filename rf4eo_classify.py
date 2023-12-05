@@ -8,7 +8,7 @@ import pandas as pd
 from random import randint
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, cohen_kappa_score, classification_report
 
 from src.utils.naming import images_dir_path, classified_file_path, classifier_file_path
 from src.utils.filing import get_image_paths, read_geotiff, write_geotiff,\
@@ -160,11 +160,14 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg=class_report)
             assessment_logger.info(msg='')
 
-            # finally log the overall accuracy
+            # finally log the overall accuracy and Cohen Kappa score
             overall_accuracy = accuracy_score(y_true=y_validation, y_pred=y_predict)
-            print_debug(msg=f'OAA: {overall_accuracy*100:.1f}%')
+            accuracy_message = f'OAA: {overall_accuracy*100:.1f}%'
+            print_debug(msg=accuracy_message)
             print_debug()
-            assessment_logger.info(msg=f'Kappa: {overall_accuracy*100:.1f}%')
+            assessment_logger.info(msg=accuracy_message)
+            cohen_kappa = cohen_kappa_score(y_true=y_validation, y_pred=y_predict)
+            assessment_logger.info(msg=f'Kappa: {cohen_kappa*100:.1f}%')
 
 
 if __name__ == '__main__':
