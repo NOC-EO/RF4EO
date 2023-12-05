@@ -54,20 +54,19 @@ def write_geotiff(output_array, output_file_path, geometry):
 
 def get_training_shapefile(configuration):
 
+    ATTRIBUTE = configuration.SETTINGS['training attribute']
+
     try:
         training_dataset = ogr.Open(training_file_path(configuration))
     except IOError as ex:
         print_debug(f'ERROR: could not open training shapefile {ex}', force_exit=True)
 
-    attributes = []
     layer_definition = training_dataset.GetLayer().GetLayerDefn()
-    for field_index in range(layer_definition.GetFieldCount()):
-        field_definition = layer_definition.GetFieldDefn(field_index)
-        attributes.append(field_definition.name)
+    attributes = [(layer_definition.GetFieldDefn(field_index)).name
+                  for field_index in range(layer_definition.GetFieldCount())]
 
-    attribute = configuration.SETTINGS['training attribute']
-    if attribute not in attributes:
-        print_debug(f'ERROR: "{attribute}" not in the training shapefile')
+    if ATTRIBUTE not in attributes:
+        print_debug(f'ERROR: "{ATTRIBUTE}" not in the training shapefile')
         print_debug(f'       available attributes are: {attributes}', force_exit=True)
 
     return training_dataset
