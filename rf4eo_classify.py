@@ -166,7 +166,7 @@ class RF4EO_Classify(object):
             print_debug(msg=accuracy_message)
             print_debug()
             assessment_logger.info(msg=accuracy_message)
-            cohen_kappa = cohen_kappa_score(y_true=y_validation, y_pred=y_predict)
+            cohen_kappa = cohen_kappa_score(y1=y_validation, y2=y_predict)
             assessment_logger.info(msg=f'Kappa: {cohen_kappa*100:.1f}%')
 
 
