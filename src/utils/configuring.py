@@ -48,8 +48,8 @@ class Config(object):
                 self.SETTINGS['image identifier'] = ""
             if self.SETTINGS['image identifier'] != "":
                 self.SETTINGS['image identifier'] = '_' + self.SETTINGS['image identifier']
-            if not configuration.has_option('SETTINGS', 'geotiffs'):
-                self.SETTINGS['geotiffs'] = "false"
+            if not configuration.has_option('SETTINGS', 'save geotiffs'):
+                self.SETTINGS['save geotiffs'] = "true"
             if not configuration.has_option('SETTINGS', 'save classifier'):
                 self.SETTINGS['save classifier'] = "false"
         except KeyError as key_ex:
