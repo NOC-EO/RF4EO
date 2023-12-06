@@ -51,7 +51,7 @@ class Config(object):
             if not configuration.has_option('SETTINGS', 'geotiffs'):
                 self.SETTINGS['geotiffs'] = "false"
             if not configuration.has_option('SETTINGS', 'save classifier'):
-                self.SETTINGS['geotiffs'] = "false"
+                self.SETTINGS['save classifier'] = "false"
         except KeyError as key_ex:
 
             print_debug(f'badly formatted: "{os.path.abspath(CONFIG_FILE)}"')
