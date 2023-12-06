@@ -33,6 +33,7 @@ class RF4EO_Classify(object):
         MAX_FEATURES = (MAX_FEATURES, None)[MAX_FEATURES == 'None']
 
         GEOTIFFS = json.loads(self.Config.SETTINGS['geotiffs'])
+        CLASSIFIERS = json.loads(self.Config.SETTINGS['save classifier'])
         VERBOSE = int(self.Config.SETTINGS['verbose'])
 
         # find the images to be classified as a list of filepaths
@@ -97,9 +98,10 @@ class RF4EO_Classify(object):
             X_train = np.nan_to_num(X_train)
             fit_estimator = classifier.fit(X=X_train, y=y_train)
 
-            pickle_file = open(classifier_file_path(self.Config, image_name), 'wb')
-            pickle.dump(classifier, pickle_file)
-            pickle_file.close()
+            if CLASSIFIERS:
+                pickle_file = open(classifier_file_path(self.Config, image_name), 'wb')
+                pickle.dump(classifier, pickle_file)
+                pickle_file.close()
 
             print_debug(f'OOB: {classifier.oob_score_*100:.1f}%')
             if VERBOSE:
