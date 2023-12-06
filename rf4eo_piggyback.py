@@ -44,7 +44,7 @@ class RF4EO_PB(object):
             try:
                 image_np, geometry = read_geotiff(image_file_path=image_path)
             except AttributeError:
-                print_debug(f'AttributeError: image file could not be read: {image_path}')
+                print_debug(f'AttributeError: image file could not be read "{image_name}"')
                 continue
             (y_size, x_size, number_bands) = image_np.shape
             image_np = image_np.reshape((y_size * x_size, number_bands))
