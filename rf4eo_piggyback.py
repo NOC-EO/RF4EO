@@ -49,8 +49,8 @@ class RF4EO_PB(object):
             (y_size, x_size, number_bands) = image_np.shape
             image_np = image_np.reshape((y_size * x_size, number_bands))
 
+            classifier_filepath = classifier_file_path(PB_config, image_name)
             try:
-                classifier_filepath = classifier_file_path(PB_config, image_name)
                 classifier_file = open(classifier_filepath, 'rb')
             except FileNotFoundError:
                 print_debug(f'FileNotFoundError: cannot find "{classifier_filepath}"')
