@@ -50,9 +50,10 @@ class RF4EO_PB(object):
             image_np = image_np.reshape((y_size * x_size, number_bands))
 
             try:
-                classifier_file = open(classifier_file_path(PB_config, image_name), 'rb')
+                classifier_filepath = classifier_file_path(PB_config, image_name)
+                classifier_file = open(classifier_filepath, 'rb')
             except FileNotFoundError:
-                print_debug(f'FileNotFoundError: "{classifier_file}"')
+                print_debug(f'FileNotFoundError: cannot find "{classifier_filepath}"')
                 continue
             classifier = pickle.load(classifier_file)
             classifier_file.close()
