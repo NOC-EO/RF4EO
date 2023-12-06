@@ -48,6 +48,8 @@ class Config(object):
                 self.SETTINGS['image identifier'] = ""
             if self.SETTINGS['image identifier'] != "":
                 self.SETTINGS['image identifier'] = '_' + self.SETTINGS['image identifier']
+            if not configuration.has_option('SETTINGS', 'geotiffs'):
+                self.SETTINGS['geotiffs'] = "false"
         except KeyError as key_ex:
 
             print_debug(f'badly formatted: "{os.path.abspath(CONFIG_FILE)}"')
