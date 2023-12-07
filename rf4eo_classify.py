@@ -13,6 +13,8 @@ from sklearn.metrics import accuracy_score, cohen_kappa_score, classification_re
 from src.utils.naming import images_dir_path, classified_file_path, classifier_file_path
 from src.utils.filing import get_image_paths, read_geotiff, write_geotiff,\
     get_logger, load_ground_truth_data
+from src.utils.printing import print_confusion_matrix
+
 from src import print_debug, Config
 
 
@@ -148,14 +150,15 @@ class RF4EO_Classify(object):
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
                                            columns=df['y_predicted'],
-                                           rownames=['Ground Truth'],
-                                           colnames=['Predicted'])
-            assessment_logger.info(msg=confusion_matrix)
+                                           rownames=['y_validation'],
+                                           colnames=['y_predicted'])
+            print_confusion_matrix(assessment_logger, confusion_matrix)
             assessment_logger.info(msg='')
 
             # next log the classification report
+            assessment_logger.info(msg='classification report')
             class_labels = np.unique(y)
-            target_names = [str(name) for name in range(1, len(class_labels) + 1)]
+            target_names = [str(name) for name in range(1, len(class_labels)+1)]
             class_report = classification_report(y_true=y_validation,
                                                  y_pred=y_predict,
                                                  target_names=target_names)
@@ -165,11 +168,12 @@ class RF4EO_Classify(object):
             # finally log the overall accuracy and Cohen Kappa score
             overall_accuracy = accuracy_score(y_true=y_validation, y_pred=y_predict)
             accuracy_message = f'OAA: {overall_accuracy*100:.1f}%'
-            print_debug(msg=accuracy_message)
-            print_debug()
             assessment_logger.info(msg=accuracy_message)
             cohen_kappa = cohen_kappa_score(y1=y_validation, y2=y_predict)
             assessment_logger.info(msg=f'Kappa: {cohen_kappa*100:.1f}%')
+
+            print_debug(msg=accuracy_message)
+            print_debug()
 
 
 if __name__ == '__main__':
