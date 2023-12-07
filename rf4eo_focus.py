@@ -83,7 +83,7 @@ class RF4EO_FOCUS(object):
                           output_file_path=seagrass_filepath,
                           geometry=geometry)
             print_debug()
-            print_debug(msg=f'saved multi-ensemble classification: "{seagrass_filename}"')
+            print_debug(msg=f'saved focussed classification: "{seagrass_filename}"')
 
 
 if __name__ == '__main__':

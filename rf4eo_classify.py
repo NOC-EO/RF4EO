@@ -13,7 +13,7 @@ from sklearn.metrics import accuracy_score, cohen_kappa_score, classification_re
 from src.utils.naming import images_dir_path, classified_file_path, classifier_file_path
 from src.utils.filing import get_image_paths, read_geotiff, write_geotiff,\
     get_logger, load_ground_truth_data
-from src.utils.printing import print_confusion_matrix
+from src.utils.printing import pretty_confusion_matrix
 
 from src import print_debug, Config
 
@@ -145,24 +145,26 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg='')
 
             # then classify the validation data (20% of the training data split)
-            # and log the confusion matrix that is produced
+            # and log a pretty version of the confusion matrix that is produced
+            # using the crosstab function from pandas
             y_predict = classifier.predict(X=np.nan_to_num(X_validation))
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
                                            columns=df['y_predicted'],
                                            rownames=['y_validation'],
                                            colnames=['y_predicted'])
-            print_confusion_matrix(assessment_logger, confusion_matrix)
+            assessment_logger.info(msg='confusion matrix')
+            assessment_logger.info(msg=pretty_confusion_matrix(confusion_matrix))
             assessment_logger.info(msg='')
 
             # next log the classification report
             assessment_logger.info(msg='classification report')
             class_labels = np.unique(y)
             target_names = [str(name) for name in range(1, len(class_labels)+1)]
-            class_report = classification_report(y_true=y_validation,
-                                                 y_pred=y_predict,
-                                                 target_names=target_names)
-            assessment_logger.info(msg=class_report)
+            report = classification_report(y_true=y_validation,
+                                           y_pred=y_predict,
+                                           target_names=target_names)
+            assessment_logger.info(msg=report)
             assessment_logger.info(msg='')
 
             # finally log the overall accuracy and Cohen Kappa score
