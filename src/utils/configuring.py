@@ -44,10 +44,10 @@ class Config(object):
                 self.SETTINGS['patch threshold'] = "0"
             if not configuration.has_option('SETTINGS', 'classes to map'):
                 self.SETTINGS['classes to map'] = "0"
-            if not configuration.has_option('SETTINGS', 'image identifier'):
-                self.SETTINGS['image identifier'] = ""
-            if self.SETTINGS['image identifier'] != "":
-                self.SETTINGS['image identifier'] = '_' + self.SETTINGS['image identifier']
+            if not configuration.has_option('SETTINGS', 'identifier'):
+                self.SETTINGS['identifier'] = ""
+            if self.SETTINGS['identifier'] != "":
+                self.SETTINGS['identifier'] = '_' + self.SETTINGS['identifier']
             if not configuration.has_option('SETTINGS', 'save geotiffs'):
                 self.SETTINGS['save geotiffs'] = "true"
             if not configuration.has_option('SETTINGS', 'save classifier'):
