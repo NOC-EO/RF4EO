@@ -107,7 +107,7 @@ class RF4EO_Classify(object):
 
             print_debug(f'OOB: {classifier.oob_score_*100:.1f}%')
             if VERBOSE:
-                print_debug(msg=f'number of features: {fit_estimator.n_features_in_}')
+                print_debug(msg=f'number of features (bands): {fit_estimator.n_features_in_}')
                 print_debug(msg=f'classes being fitted: {fit_estimator.classes_}')
 
             # then classify the full image using the trained classifier

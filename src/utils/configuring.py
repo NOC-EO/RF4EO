@@ -32,7 +32,8 @@ class Config(object):
                 self.CLASSIFIER['number trees'] = "1000"
             if not configuration.has_option('CLASSIFIER', 'number cores'):
                 self.CLASSIFIER['number cores'] = "-1"
-            if not configuration.has_option('CLASSIFIER', 'max features'):
+            if not configuration.has_option('CLASSIFIER', 'max features') or \
+                    self.CLASSIFIER['max features'] == '':
                 self.CLASSIFIER['max features'] = "None"
 
             if not configuration.has_option('SETTINGS', 'version'):
