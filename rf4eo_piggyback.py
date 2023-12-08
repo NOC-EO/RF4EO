@@ -36,6 +36,7 @@ class RF4EO_PB(object):
             # if this image has already been classified skip to next image
             image_name = os.path.split(image_path)[1]
             classified_filepath = classified_file_path(self.Config, image_name)
+            classifier_filepath = classifier_file_path(PB_config, image_name)
             if os.path.exists(classified_filepath):
                 print_debug(msg=f'WARNING: already classified {image_name}')
                 continue
@@ -49,7 +50,6 @@ class RF4EO_PB(object):
             (y_size, x_size, number_bands) = image_np.shape
             image_np = image_np.reshape((y_size * x_size, number_bands))
 
-            classifier_filepath = classifier_file_path(PB_config, image_name)
             try:
                 classifier_file = open(classifier_filepath, 'rb')
             except FileNotFoundError:
