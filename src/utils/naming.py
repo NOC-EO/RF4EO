@@ -73,6 +73,6 @@ def seagrass_file_path(configuration, number_images):
 
 def classifier_file_path(configuration, image_name):
     classifier_filename = image_name.replace(".tif", f'_classifier_v{configuration.SETTINGS["version"]}.pkl')
-    classifier_filename = classifier_filename.replace(classifier_filename[:7], configuration.PATHS['study location'])
+    classifier_filename = classifier_filename.replace(classifier_filename[:6], configuration.PATHS['study location'])
     classifier_filepath = os.path.join(classifier_dir_path(configuration), classifier_filename)
     return classifier_filepath
