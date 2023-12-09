@@ -138,15 +138,14 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg=f'out of bag:  {classifier.oob_score_*100:.1f}%')
             assessment_logger.info(msg='')
 
-            # first log the relative importance of each band
+            # first the relative importance of each band
             assessment_logger.info(msg='relative importance of bands')
             for band_index, importance in enumerate(fit_estimator.feature_importances_):
                 assessment_logger.info(msg=f'band {band_index+1} importance: {importance:.2f}')
             assessment_logger.info(msg='')
 
             # then classify the validation data (20% of the training data split)
-            # and log a pretty version of the confusion matrix that is produced
-            # using the crosstab function from pandas
+            # and create the confusion matrix using the pandas crosstab function
             y_predict = classifier.predict(X=np.nan_to_num(X_validation))
             df = pd.DataFrame({'y_validation': y_validation, 'y_predicted': y_predict})
             confusion_matrix = pd.crosstab(index=df['y_validation'],
@@ -157,7 +156,7 @@ class RF4EO_Classify(object):
             assessment_logger.info(msg=pretty_confusion_matrix(confusion_matrix))
             assessment_logger.info(msg='')
 
-            # next log the classification report
+            # next the classification report
             assessment_logger.info(msg='classification report')
             class_labels = np.unique(y)
             target_names = [str(name) for name in range(1, len(class_labels)+1)]
