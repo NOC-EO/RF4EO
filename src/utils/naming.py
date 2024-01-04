@@ -32,6 +32,7 @@ def classifier_dir_path(configuration):
         os.makedirs(classifier_path)
     return classifier_path
 
+
 def images_dir_path(configuration):
     images_path = os.path.join(base_dir_path(configuration),
                                f'images{configuration.SETTINGS["identifier"]}')
