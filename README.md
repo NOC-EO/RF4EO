@@ -1,6 +1,6 @@
 ## 1. Random Forest for Earth Observation
 
-<table>
+<table hidden>
   <tr>
     <th>Created @ the NOC</th>
     <th><img src="/docs/images/NOC_logo.png" width="100"></th>
