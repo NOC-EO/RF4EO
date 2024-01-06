@@ -1,6 +1,6 @@
 <table>
   <tr>
-    <th># Random Forest for Earth Observation</th>
+    <th>Random Forest for Earth Observation</th>
     <th><img src="/docs/images/NOC_logo.png" width="100"></th>
   </tr>
   <tr>
