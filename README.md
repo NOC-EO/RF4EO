@@ -17,7 +17,7 @@
 
 The RF4EO package can be used for the random forest classsification of optical satellite data and to apply mulit-classifier system to enhance results. 
 
-<img src="/docs/images/seagrass.jpg" width="500">
+<img src="/docs/images/seagrass.jpg" width="750">
 
 ## 1. Installation
 
