@@ -11,7 +11,6 @@ for the ReSOW project
 <p align="left">
   <img src="/docs/images/ReSOW_logo.png" width="300">
 </p>
-
 funded by UKRI Sustainable Management of UK Marine Resources.
 
 <p align="left">
