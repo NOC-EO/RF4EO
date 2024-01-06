@@ -3,7 +3,7 @@
 <table hidden="hidden">
   <tr>
     <th>Created @ the NOC</th>
-    <th><img src="/docs/images/NOC_logo.png" width="100"></th>
+    <th><p align="left"><img src="/docs/images/NOC_logo.png" width="100"></p></th>
   </tr>
   <tr>
     <td>for the ReSOW project</td>
