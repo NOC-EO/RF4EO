@@ -6,7 +6,7 @@
 </p>
 
 <p align="right">
-  <img src="/docs/images/SMMR_logo.png" width="500">
+  <img src="/docs/images/SMMR_logo.png" width="100">
 </p>
 
 The RF4EO package can be used for the random forest classsification of optical satellite data and to apply mulit-classifier system to enhance results. 
