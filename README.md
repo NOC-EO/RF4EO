@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th><p width = 500>Created @ the NOC</p></th>
+    <th p width = 500>Created @ the NOC</th>
     <th><img src="/docs/images/NOC_logo.png" width="100"></th>
   </tr>
 </table>
