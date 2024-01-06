@@ -4,7 +4,7 @@
     <th><img src="/docs/images/NOC_logo.png" width="100"></th>
   </tr>
   <tr>
-    <td>Created for ReSOW project</td>
+    <td>Created @ the NOC for ReSOW project</td>
     <td><img src="/docs/images/ReSOW_logo.png" width="300"></td>
   </tr>
   <tr>
@@ -12,26 +12,6 @@
     <td><img src="/docs/images/SMMR_logo.png" width="150"></td>
   </tr>
 </table>
-
-
-
-
-This repo was created at NOC
-
-<p align="left">
-  <img src="/docs/images/NOC_logo.png" width="100">
-</p>
-
-for the ReSOW project
-
-<p align="left">
-  <img src="/docs/images/ReSOW_logo.png" width="300">
-</p>
-funded by UKRI Sustainable Management of UK Marine Resources.
-
-<p align="left">
-  <img src="/docs/images/SMMR_logo.png" width="150">
-</p>
 
 The RF4EO package can be used for the random forest classsification of optical satellite data and to apply mulit-classifier system to enhance results. 
 
