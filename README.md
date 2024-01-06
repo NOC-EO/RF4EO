@@ -1,4 +1,4 @@
-###### Random Forest for Earth Observation
+# Random Forest for Earth Observation
 
 
 <p align="left">
