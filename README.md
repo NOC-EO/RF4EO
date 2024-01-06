@@ -8,7 +8,7 @@
 </table>
 <table>
   <tr>
-    <<th width = 200>>for the ReSOW project</th>
+    <th width = 200>for the ReSOW project</th>
     <th><img src="/docs/images/ReSOW_logo.png" width="300"></th>
   </tr>
 </table>
