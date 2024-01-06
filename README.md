@@ -10,7 +10,7 @@
     <td><img src="/docs/images/ReSOW_logo.png" width="300"></td>
   </tr>
   <tr>
-    <td>Funded by UKRI SMMR</td>
+    <td>funded by UKRI SMMR</td>
     <td><img src="/docs/images/SMMR_logo.png" width="150"></td>
   </tr>
 </table>
