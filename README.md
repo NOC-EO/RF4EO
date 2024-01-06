@@ -1,12 +1,18 @@
 # Random Forest for Earth Observation
 
-This repo was created for the ReSow project at NOC.
+This repo was created at NOC
+
+<p align="left">
+  <img src="/docs/images/NOC_logo.png" width="300">
+</p>
+
+for the ReSOW project
 
 <p align="left">
   <img src="/docs/images/ReSOW_logo.png" width="300">
 </p>
 
-Funded by UKRI Sustainable Management of UK Marine Resources.
+funded by UKRI Sustainable Management of UK Marine Resources.
 
 <p align="left">
   <img src="/docs/images/SMMR_logo.png" width="150">
