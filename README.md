@@ -1,14 +1,18 @@
 ## 1. Random Forest for Earth Observation
 
-<table hidden="hidden">
+<table>
   <tr>
     <th>Created @ the NOC</th>
     <th><p align="left"><img src="/docs/images/NOC_logo.png" width="100"></p></th>
   </tr>
+</table>
+<table>
   <tr>
     <td>for the ReSOW project</td>
     <td><img src="/docs/images/ReSOW_logo.png" width="300"></td>
   </tr>
+</table>
+<table>
   <tr>
     <td>funded by UKRI SMMR</td>
     <td><img src="/docs/images/SMMR_logo.png" width="150"></td>
