@@ -4,14 +4,12 @@
     <th><img src="/docs/images/NOC_logo.png" width="100"></th>
   </tr>
   <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
+    <td>Created for ReSOW project</td>
+    <td><img src="/docs/images/ReSOW_logo.png" width="300"></td>
   </tr>
   <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
+    <td>Funded by UKRI SMMR</td>
+    <td><img src="/docs/images/SMMR_logo.png" width="150"></td>
   </tr>
 </table>
 
