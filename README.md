@@ -1,16 +1,19 @@
-# Random Forest for Earth Observation
+## 1. Random Forest for Earth Observation
 
-This repo was created for the ReSow project at NOC.
-
-<p align="left">
-  <img src="/docs/images/ReSOW_logo.png" width="300">
-</p>
-
-Funded by UKRI Sustainable Management of UK Marine Resources.
-
-<p align="left">
-  <img src="/docs/images/SMMR_logo.png" width="150">
-</p>
+<table hidden="hidden">
+  <tr>
+    <th>Created @ the NOC</th>
+    <th><img src="/docs/images/NOC_logo.png" width="100"></th>
+  </tr>
+  <tr>
+    <td>for the ReSOW project</td>
+    <td><img src="/docs/images/ReSOW_logo.png" width="300"></td>
+  </tr>
+  <tr>
+    <td>Funded by UKRI SMMR</td>
+    <td><img src="/docs/images/SMMR_logo.png" width="150"></td>
+  </tr>
+</table>
 
 The RF4EO package can be used for the random forest classsification of optical satellite data and to apply mulit-classifier system to enhance results. 
 
