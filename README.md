@@ -14,7 +14,7 @@
 </table>
 <table>
   <tr>
-    <th width = 200>funded by UKRI SMMR</th>
+    <th width = 200>funded by UKRI</th>
     <th><img src="/docs/images/SMMR_logo.png" width="150"</th>
   </tr>
 </table>
