@@ -2,20 +2,20 @@
 
 <table>
   <tr>
-    <th p width = 500>Created @ the NOC</th>
+    <th width = 200>Created @ the NOC</th>
     <th><img src="/docs/images/NOC_logo.png" width="100"></th>
   </tr>
 </table>
 <table>
   <tr>
-    <td>for the ReSOW project</td>
-    <td><img src="/docs/images/ReSOW_logo.png" width="300"></td>
+    <<th width = 200>>for the ReSOW project</th>
+    <th><img src="/docs/images/ReSOW_logo.png" width="300"></th>
   </tr>
 </table>
 <table>
   <tr>
-    <td>funded by UKRI SMMR</td>
-    <td><img src="/docs/images/SMMR_logo.png" width="150"</td>
+    <th width = 200>funded by UKRI SMMR</th>
+    <th><img src="/docs/images/SMMR_logo.png" width="150"</th>
   </tr>
 </table>
 
