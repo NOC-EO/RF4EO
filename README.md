@@ -1,10 +1,12 @@
+## 1. Random Forest for Earth Observation
+
 <table>
   <tr>
-    <th>Random Forest for Earth Observation</th>
+    <th>Created @ the NOC</th>
     <th><img src="/docs/images/NOC_logo.png" width="100"></th>
   </tr>
   <tr>
-    <td>Created @ the NOC for ReSOW project</td>
+    <td>for the ReSOW project</td>
     <td><img src="/docs/images/ReSOW_logo.png" width="300"></td>
   </tr>
   <tr>
