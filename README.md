@@ -3,7 +3,7 @@
 This repo was created at NOC
 
 <p align="left">
-  <img src="/docs/images/NOC_logo.png" width="300">
+  <img src="/docs/images/NOC_logo.png" width="100">
 </p>
 
 for the ReSOW project
