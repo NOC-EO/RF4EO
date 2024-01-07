@@ -63,6 +63,7 @@ mamba create -n rf4eo gdal pandas prettytable proj scikit-image scikit-learn -c 
 mamba activate rf4eo
 ```
 
+If you have successfully created and activated the **rf4eo** mamba environment your terminal command line prompt should now start with `(rf4eo)`.
 Use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository to run the code.
 
 
