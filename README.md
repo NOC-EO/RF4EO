@@ -69,7 +69,7 @@ Use the `cd` command (change directory) to navigate to the directory where you i
 
 ## 3. Documentation
 
-to follow
+to follow...
 
 
 
