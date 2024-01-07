@@ -1,0 +1,1 @@
+mamba create -n rf4eo scikit-image scikit-learn
