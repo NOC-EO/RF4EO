@@ -42,6 +42,8 @@ Create a new anaconda environment named **rf4eo** with all the required packages
 
 ```
 conda env create --file env\environment.yml
+```
+```
 conda activate rf4eo
 ```
 
@@ -56,6 +58,8 @@ Open the Mamba Prompt window and create and activate this environment by enterin
 
 ```
 mamba create -n rf4eo gdal pandas prettytable proj scikit-image scikit-learn -c conda-forge
+```
+```
 mamba activate rf4eo
 ```
 
