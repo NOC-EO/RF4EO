@@ -27,20 +27,49 @@ The RF4EO package applies random forest classsification to optical satellite dat
 
 ### 1.1 Download or clone the **RF4EO** repository
 
-**download option** - download the latest release, e.g. `(v1.0)`, on the RHS of the top level project page then unzip the source code locally.
+**download option** - navigate to the latest release **(v1.0)** on the RHS of the root RF4EO repo page and download and unzip the source code.
 
-or
-
-**clone option** - from your local machine clone the repository from using GitHub address:
-
-    https://github.com/NOC-EO/RF4EO
+**clone option** - from your local machine clone the repository using the OcTyPy repo address https://github.com/NOC-EO/RF4EO.
 
 
+### 1.2 Create an environment with Anaconda
+
+To run the code in the project you need to install the required Python packages in an environment. This can be done using **Anaconda**, which can be downloaded [here](https://mamba.readthedocs.io/en/latest/index.html).
+
+Open the Anaconda Prompt windowand use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository.
+
+Create a new anaconda environment named **rf4eo** with all the required packages and activate this environment by entering the following commands:
+
+```
+conda env create --file env\environment.yml
+```
+```
+conda activate rf4eo
+```
+
+If you have successfully created and activated the **rf4eo** anaconda environment your terminal command line prompt should now start with `(rf4eo)`.
+
+
+### 1.3 Create an environment with Mamba
+
+To run the code in the project you need to install the required Python packages in an environment. This can be done using **Mamba**, which can be downloaded [here](https://www.anaconda.com/download/).
+
+Open the Mamba Prompt window and create and activate this environment by entering the following commands.
+
+```
+mamba create -n rf4eo gdal pandas prettytable proj scikit-image scikit-learn -c conda-forge
+```
+```
+mamba activate rf4eo
+```
+
+If you have successfully created and activated the **rf4eo** mamba environment your terminal command line prompt should now start with `(rf4eo)`.
+Use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository to run the code.
 
 
 ## 3. Documentation
 
-to follow
+to follow...
 
 
 
