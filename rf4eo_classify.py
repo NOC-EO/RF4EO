@@ -34,7 +34,6 @@ class RF4EO_Classify(object):
         MAX_FEATURES = self.Config.CLASSIFIER['max features']
         MAX_FEATURES = (MAX_FEATURES, None)[MAX_FEATURES == 'None']
 
-        GEOTIFFS = json.loads(self.Config.SETTINGS['save geotiffs'])
         CLASSIFIERS = json.loads(self.Config.SETTINGS['save classifier'])
         VERBOSE = int(self.Config.SETTINGS['verbose'])
 

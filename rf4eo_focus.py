@@ -13,7 +13,6 @@ class RF4EO_FOCUS(object):
 
     def __init__(self):
         self.Config = Config()
-        print_debug()
 
     def run(self):
 
@@ -26,6 +25,7 @@ class RF4EO_FOCUS(object):
         MEC_image_paths = get_image_paths(images_directory=classified_images_dir_path, identifier=f'v{VERSION}')
         number_images = len(MEC_image_paths)
 
+        print_debug()
         if not number_images:
             print_debug(f'WARNING: no images found here "{classified_images_dir_path}"', force_exit=True)
 
