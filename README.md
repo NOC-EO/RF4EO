@@ -27,29 +27,32 @@ The RF4EO package applies random forest classsification to optical satellite dat
 
 ### 1.1 Download or clone the **RF4EO** repository
 
-**download option** - download the latest release, e.g. `(v1.0)`, on the RHS of the top level project page then unzip the source code locally.
+**download option** - navigate to the latest release **(v1.0)** on the RHS of the root RF4EO repo page and download and unzip the source code.
 
-or
+**clone option** - from your local machine clone the repository using the OcTyPy repo address https://github.com/NOC-EO/RF4EO.
 
-**clone option** - from your local machine clone the repository from using GitHub address:
-
-    https://github.com/NOC-EO/RF4EO
 
 ### 1.2 Create an environment with Anaconda
-To run the code in the project you need to install the python packages that are required by RF4EO. To do this we will use Anaconda, which can be downloaded here.
 
-Open the Anaconda prompt (in Mac and Linux, open a terminal window) and use the cd command (change directory) to the directory where you have installed the SAR-TWL repository.
+To run the code in the project you need to install the required Python packages in an environment. This can be done using **Anaconda**, which can be downloaded [here](https://mamba.readthedocs.io/en/latest/index.html).
 
-Create a new anaconda environment named sartwl with all the required packages and activate this environment by entering the following commands:
+Open the Mamba Prompt windowand use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository.
 
-conda env create --file env\environment.yml
-conda activate rf4eo
-If you have successfully created and activated the sartwl anaconda environment your terminal command line prompt will now start with (rf4eo).
+Create a new Mamba environment named **rf4eo** with all the required packages and activate this environment by entering the following commands:
 
-Finally run this command to add the project direction to the system path:
+```
+mamba env create --file env\environment.yml
+mamba activate rf4eo
+```
 
-conda develop <project directory>
-Where <project directory> is the directory where you installed the RFR4EO repository e.g. for Windows it might be c:\code\RF4EO-1.0
+If you have successfully created and activated the **rf4eo** anaconda environment your terminal command line prompt should now start with `(rf4eo)`.
+
+
+### 1.3 Create an environment with Mamba
+
+To run the code in the project you need to install the required Python packages in an environment. This can be done using **Mamba**, which can be downloaded [here](https://www.anaconda.com/download/).
+
+Open the Anaconda Prompt window (in Mac and Linux, open a terminal window with Anaconda enabled) and use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository.
 
 
 ## 3. Documentation
