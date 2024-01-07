@@ -52,11 +52,14 @@ If you have successfully created and activated the **rf4eo** anaconda environmen
 
 To run the code in the project you need to install the required Python packages in an environment. This can be done using **Mamba**, which can be downloaded [here](https://www.anaconda.com/download/).
 
-Open the Mamba Prompt window and use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository.
+Open the Mamba Prompt window and create and activate this environment by entering the following commands.
 
 ```
 mamba create -n rf4eo gdal pandas prettytable proj scikit-image scikit-learn -c conda-forge
+mamba activate rf4eo
 ```
+
+Use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository to run the code.
 
 
 ## 3. Documentation
