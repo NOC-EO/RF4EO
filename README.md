@@ -36,13 +36,13 @@ The RF4EO package applies random forest classsification to optical satellite dat
 
 To run the code in the project you need to install the required Python packages in an environment. This can be done using **Anaconda**, which can be downloaded [here](https://mamba.readthedocs.io/en/latest/index.html).
 
-Open the Mamba Prompt windowand use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository.
+Open the Anaconda Prompt windowand use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository.
 
-Create a new Mamba environment named **rf4eo** with all the required packages and activate this environment by entering the following commands:
+Create a new anaconda environment named **rf4eo** with all the required packages and activate this environment by entering the following commands:
 
 ```
-mamba env create --file env\environment.yml
-mamba activate rf4eo
+conda env create --file env\environment.yml
+conda activate rf4eo
 ```
 
 If you have successfully created and activated the **rf4eo** anaconda environment your terminal command line prompt should now start with `(rf4eo)`.
@@ -52,7 +52,11 @@ If you have successfully created and activated the **rf4eo** anaconda environmen
 
 To run the code in the project you need to install the required Python packages in an environment. This can be done using **Mamba**, which can be downloaded [here](https://www.anaconda.com/download/).
 
-Open the Anaconda Prompt window (in Mac and Linux, open a terminal window with Anaconda enabled) and use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository.
+Open the Mamba Prompt window and use the `cd` command (change directory) to navigate to the directory where you installed the **RF4EO** repository.
+
+```
+mamba create -n rf4eo gdal pandas prettytable proj scikit-image scikit-learn -c conda-forge
+```
 
 
 ## 3. Documentation
