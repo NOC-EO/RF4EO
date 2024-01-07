@@ -1,1 +1,1 @@
-mamba create -n rf4eo scikit-image scikit-learn
+mamba create -n rf4eo gdal pandas prettytable proj scikit-image scikit-learn -c conda-forge

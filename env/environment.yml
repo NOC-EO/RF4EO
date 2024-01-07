@@ -3,5 +3,9 @@ channels:
   - defaults
   - conda-forge
 dependencies:
+  - gdal
+  - pandas
+  - prettytable
+  - proj
   - scikit-image
   - scikit-learn
